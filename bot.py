@@ -222,7 +222,7 @@ async def kick(ctx, target: discord.Member):
 		if str(role) == 'leader':
 			await target.kick()
 			
-			
+"""			
 @client.event
 
 async def on_message(message):
@@ -243,7 +243,7 @@ async def on_message(message):
 
 	if randint(0, 100) >= 95:
 		await message.add_reaction('😀')
-
+"""
 #токен
 token = open ('token.txt', 'r').readline()
 client.run(token)
