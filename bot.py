@@ -8,19 +8,19 @@ from datetime import datetime
 from datetime import date
 from time import sleep
 from discord.utils import get
+from config import config
+from config import channels
 
-client = commands.Bot( command_prefix = '$', intents = discord.Intents.all())
+client = commands.Bot( command_prefix = config['prefix'], intents = discord.Intents.all())
 
 #connection = sqlite3.connect('server.db')
 #cursor = connection.cursor()
-
-guild = client.get_guild(704383751224033301)
 
 @client.event
 #індикація запуску
 async def on_ready():
 	print('Connect success!!!')
-	channel = client.get_channel(704690682920697875)
+	channel = client.get_channel(704660113750884433)
 	await channel.send('Успішний запуск')
 	"""
 	cursor.execute(CREATE TABLE IF NOT EXISTS users (
