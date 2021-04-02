@@ -69,26 +69,7 @@ async def on_member_remove( member ):
 
 
 
-@client.event
 
-async def on_message(message):
-	banRoles = ['bot']
-	from config import helloWords
-	msg = message.content.lower()
-	permission = True
-
-
-	if msg in helloWords:
-		for role in message.author.roles:
-			if str(role) in banRoles:
-				permission = False
-
-		if permission:
-			await message.channel.send(f'{helloWords[random.randint(0, len(helloWords) - 1)]}')
-
-
-	if randint(0, 100) >= 95:
-		await message.add_reaction('😀')
 
 
 
@@ -242,7 +223,26 @@ async def kick(ctx, target: discord.Member):
 			await target.kick()
 			
 			
+@client.event
 
+async def on_message(message):
+	banRoles = ['bot']
+	from config import helloWords
+	msg = message.content.lower()
+	permission = True
+
+
+	if msg in helloWords:
+		for role in message.author.roles:
+			if str(role) in banRoles:
+				permission = False
+
+		if permission:
+			await message.channel.send(f'{helloWords[random.randint(0, len(helloWords) - 1)]}')
+
+
+	if randint(0, 100) >= 95:
+		await message.add_reaction('😀')
 
 #токен
 token = open ('token.txt', 'r').readline()
