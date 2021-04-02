@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import datetime
-import random
+from random import randint
 import sqlite3
 from threading import Thread
 from datetime import datetime
@@ -67,11 +67,33 @@ async def on_member_remove( member ):
 	await channel.send(embed = discord.Embed(description = f'``{member.display_name}`` покинув нас!', color = 0x4D4D4D))	
 
 
-@client.command(pass_context = True)
-#команда вітання з Морганом
-async def Morgan (ctx):
-	addressee = ctx.message.author
-	await ctx.send(embed = discord.Embed(description = f'Здоров, {addressee.mention}', color = 0x4D4D4D))
+
+
+@client.event
+
+async def on_message(message):
+	banRoles = ['bot']
+	from config import helloWords
+	msg = message.content.lower()
+	permission = True
+
+
+	if msg in helloWords:
+		for role in message.author.roles:
+			if str(role) in banRoles:
+				permission = False
+
+		if permission:
+			await message.channel.send(f'{helloWords[random.randint(0, len(helloWords) - 1)]}')
+
+
+	if randint(0, 100) >= 95:
+		await message.add_reaction('😀')
+
+
+
+
+
 
 
 @client.command(pass_context = True)
@@ -148,6 +170,8 @@ async def leave(ctx):
 @client.command(pass_context = True)
 #команда виводу загальної публічної інформації сервера
 async def info(ctx):
+
+	guild = ctx.message.guild
 
 	server_created = guild.created_at.strftime('%d.%m.%y %H:%M:%S')
 	server_created_datetime = guild.created_at

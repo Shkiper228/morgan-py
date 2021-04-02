@@ -16,3 +16,10 @@ channels = {
 	'new_users': client.get_channel(704690682920697875),
 	'advertisement': client.get_channel(720915216174415963)
 }
+
+helloWords = [
+	'привіт',
+	'привет',
+	'здоров'
+]
+	
