@@ -61,7 +61,7 @@ class User(commands.Cog):
 
 	@commands.command(alieses = ['time'])
 	#команда для виводу часу по GMT+2
-	async def __time (ctx):
+	async def __time (self, ctx):
 		current_datetime = datetime.now()
 		time = f'{current_datetime.hour + 2} : {current_datetime.minute} : {current_datetime.second}'
 		await ctx.send(embed = discord.Embed(description = f'{ctx.message.author.mention} дійсний час по GMT +2 --> {time}', color = 0x4D4D4D))
