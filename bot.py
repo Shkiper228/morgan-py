@@ -11,18 +11,16 @@ from discord.utils import get
 from config import config
 from config import channels
 
+import os
+
 client = commands.Bot( command_prefix = config['prefix'], intents = discord.Intents.all())
 
 #connection = sqlite3.connect('server.db')
 #cursor = connection.cursor()
 
-@client.event
 #індикація запуску
-async def on_ready():
-	print('Connect success!!!')
-	channel = client.get_channel(704660113750884433)
-	await channel.send('Успішний запуск')
-	"""
+
+"""
 	cursor.execute(CREATE TABLE IF NOT EXISTS users (
 		name TEXT,
 		id INT,
@@ -50,28 +48,7 @@ async def on_ready():
 	sql = db.cursor()
 
 	sql.execute()
-	"""
-
-@client.event
-#сповіщення про нового учасника сервера
-async def on_member_join( member ):
-	channel = client.get_channel(704690682920697875)
-	role = discord.utils.get(member.guild.roles, id = 704691487857704980)
-	await member.add_roles( role )
-	await channel.send(embed = discord.Embed(description = f'{member.display_name} приєднався до нас!', color = 0x4D4D4D))
-
-@client.event
-#сповіщення про вихід учасника сервера
-async def on_member_remove( member ):
-	channel = client.get_channel(704660113750884433)
-	await channel.send(embed = discord.Embed(description = f'``{member.display_name}`` покинув нас!', color = 0x4D4D4D))	
-
-
-
-
-
-
-
+"""
 
 
 
@@ -244,6 +221,36 @@ async def on_message(message):
 	if randint(0, 100) >= 95:
 		await message.add_reaction('😀')
 """
+
+@client.command()
+async def load(ctx, extension):
+	if ctx.author.id == 506215900836265995:
+		client.load_extension(f'cogs.{extension}')
+		await ctx.send('Success load!')
+	else:
+		await ctx.send('Ви не розробник!')
+
+@client.command()
+async def unload(ctx, extension):
+	if ctx.author.id == 506215900836265995:
+		client.unload_extension(f'cogs.{extension}')
+		await ctx.send('Success load!')
+	else:
+		await ctx.send('Ви не розробник!')	
+
+@client.command()
+async def reload(ctx, extension):
+	if ctx.author.id == 506215900836265995:
+		client.unload_extension(f'cogs.{extension}')
+		client.load_extension(f'cogs.{extension}')
+		await ctx.send('Success load!')
+	else:
+		await ctx.send('Ви не розробник!')
+
+for filename in os.listdir('./cogs'):
+	if filename.endswith(".py"):
+		client.load_extension(f'cogs.{filename[:-3]}')		
+
 #токен
 token = open ('token.txt', 'r').readline()
 client.run(token)
