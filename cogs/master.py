@@ -48,6 +48,9 @@ class User(commands.Cog):
 		from config import helloWords
 		msg = message.content.lower()
 		permission = True
+
+		emojis = message.guild.emojis
+		print(len(emojis))
 	
 		for role in message.author.roles:
 			if str(role) in banRoles:
@@ -57,7 +60,7 @@ class User(commands.Cog):
 			if msg in helloWords:
 				await message.channel.send(f'{helloWords[randint(0, len(helloWords) - 1)]}')
 			if randint(0, 100) <= 10:
-				await message.add_reaction('😀')
+				await message.add_reaction(get_emoji(emojis[randint(0, len(emojis) - 1)]))
 
 
 
