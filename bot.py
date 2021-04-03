@@ -54,12 +54,6 @@ client = commands.Bot( command_prefix = config['prefix'], intents = discord.Inte
 
 
 
-@client.command(pass_context = True)
-#команда для виводу часу по GMT+2
-async def time (ctx):
-	current_datetime = datetime.now()
-	time = f'{current_datetime.hour + 2} : {current_datetime.minute} : {current_datetime.second}'
-	await ctx.send(embed = discord.Embed(description = f'{ctx.message.author.mention} дійсний час по GMT +2 --> {time}', color = 0x4D4D4D))
 
 @client.command(pass_context = True)
 #команда для гри в камінь-нодиці-папір
