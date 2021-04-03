@@ -119,20 +119,6 @@ async def leave(ctx):
 	else: 
 		voice = await channel.connect()
 
-@client.command(pass_context = True)
-#команда виводу загальної публічної інформації сервера
-async def info(ctx):
-
-	guild = ctx.message.guild
-
-	server_created = guild.created_at.strftime('%d.%m.%y %H:%M:%S')
-	server_created_datetime = guild.created_at
-
-
-	await ctx.send(embed = discord.Embed(
-		description = (f'Сервер було створено: {server_created}\n Творець сервера: {guild.owner.display_name}'), 
-		title = 'ЗАГАЛЬНА ІНФОРМАЦІЯ ПРО СЕРВЕР', 
-		color = 0x4D4D4D))
 	
 @client.command(pass_context = True)
 #команда для остримання безкінечного посилання на сервер
