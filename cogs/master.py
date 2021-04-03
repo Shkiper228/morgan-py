@@ -58,7 +58,7 @@ class User(commands.Cog):
 		if permission:
 			if msg in helloWords:
 				await message.channel.send(f'{helloWords[randint(0, len(helloWords) - 1)]}')
-			if randint(0, 100) <= 5:
+			if randint(0, 100) <= 100:
 				emojis = message.guild.emojis
 				emoji = emojis[randint(0, len(emojis) - 1)]
 				await message.add_reaction(emoji)
