@@ -52,11 +52,12 @@ class User(commands.Cog):
 		for role in message.author.roles:
 			if str(role) in banRoles:
 				permission = False
-				if permission:
-					if msg in helloWords:
-						await message.channel.send(f'{helloWords[randint(0, len(helloWords) - 1)]}')
-					if randint(0, 100) >= 0:
-						await message.add_reaction('😀')
+
+		if permission:
+			if msg in helloWords:
+				await message.channel.send(f'{helloWords[randint(0, len(helloWords) - 1)]}')
+			if randint(0, 100) >= 0:
+				await message.add_reaction('😀')
 			
 				
 				
