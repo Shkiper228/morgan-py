@@ -8,6 +8,7 @@ from datetime import datetime, tzinfo, timedelta
 from tzlocal import get_localzone
 import pytz
 from config import config, channels
+from discord.utils import get
 
 
 
@@ -157,8 +158,10 @@ class User(commands.Cog):
 
 					await ctx.message.author.send(f'Кількість мафії: {mafias} Кількість шерифів: {sherifs} Кількість лікарів: {doctors} Кількість повій: {pytanas} Кількість мирних: {civils}')
 					if arg2 == 'make':
-						if ctx.message.author.voice != None:
-							print(ctx.message.author.voice)
+						channel = ctx.message.author.voice.channel
+						
+						print(len(channel.members))
+						if channel != None:
 							await ctx.message.channel.send(f'{ctx.message.author.mention}')
 						else:
 							await ctx.message.channel.send(f'{ctx.message.author.mention} для облаштування гри потрібно, аби ви були в голосовому каналі')

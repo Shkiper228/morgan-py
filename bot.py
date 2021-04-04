@@ -7,7 +7,7 @@ from datetime import datetime, tzinfo, timedelta
 from tzlocal import get_localzone
 import pytz
 from config import config, channels
-
+from discord.utils import get
 import os
 
 client = commands.Bot( command_prefix = config['prefix'], intents = discord.Intents.all())
@@ -55,6 +55,7 @@ async def join(ctx):
 	global voice
 	channel = ctx.message.author.voice.channel
 	voice = get(client.voice_clients, guild = ctx.guild)
+	print(voice)
 
 	if voice and voice.is_connected():
 		await voice.move_to(channel)
