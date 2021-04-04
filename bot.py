@@ -3,13 +3,10 @@ from discord.ext import commands
 import datetime
 from random import randint
 import sqlite3
-from threading import Thread
-from datetime import datetime
-from datetime import date
-from time import sleep
-from discord.utils import get
-from config import config
-from config import channels
+from datetime import datetime, tzinfo, timedelta
+from tzlocal import get_localzone
+import pytz
+from config import config, channels
 
 import os
 

@@ -1,15 +1,16 @@
 import discord
 from discord.ext import commands
 import datetime
+import math
 from random import randint
 import sqlite3
-from threading import Thread
 from datetime import datetime, tzinfo, timedelta
 from tzlocal import get_localzone
 import pytz
-from time import sleep
-from discord.utils import get
 from config import config, channels
+
+
+
 
 class User(commands.Cog):
 
@@ -22,9 +23,6 @@ class User(commands.Cog):
 	async def time (self, ctx):
 		tz = pytz.timezone('Europe/Kiev')
 		current_datetime = datetime.now(tz)
-
-
-
 		time = f'{current_datetime.hour} : {current_datetime.minute} : {current_datetime.second}'
 		await ctx.send(embed = discord.Embed(description = f'{ctx.message.author.mention} дійсний місцевий час --> {time}', color = 0x4D4D4D))
 
@@ -120,6 +118,46 @@ class User(commands.Cog):
 		for role in ctx.author.roles:
 			if str(role) == 'leader':
 				await target.kick()
+
+
+	@commands.command()
+	
+	async def mafia(self, ctx, arg1 = None, arg2 = None, arg3 = None):
+		if arg1 == 'game':
+			if arg2 == 'calculation':
+				if arg3 == None:
+					await ctx.message.channel.send(f'{ctx.message.author.mention} вкажіть кількість гравців без ведучого')
+				elif int(arg3) < 5:
+					await ctx.message.channel.send(f'{ctx.message.author.mention} потрібно більше гравців!')
+				else:
+					from config import mafia
+					players = dict(
+						count = int(arg3),
+						mafias = None,
+						sherifs = None,
+						doctors = None,
+						pytanas = None,
+						civils = None
+						)
+
+					#calculation counts for roles
+					players['mafias'] = math.floor(players['count'] / mafia['minPlayers']['mafia'])
+					mafias = players['mafias']
+					players['sherifs'] = math.floor(players['count'] / mafia['minPlayers']['sherif'])
+					sherifs = players['sherifs']
+					players['doctors'] = math.floor(players['count'] / mafia['minPlayers']['doctor'])
+					doctors = players['doctors']
+					players['pytanas'] = math.floor(players['count'] / mafia['minPlayers']['pytana'])
+					pytanas = players['pytanas']
+					players['civils'] = players['count'] - mafias - sherifs - doctors - pytanas
+					civils = players['civils']
+
+					await ctx.message.author.send(f'Кількість мафії: {mafias} Кількість шерифів: {sherifs} Кількість лікарів: {doctors} Кількість повій: {pytanas} Кількість мирних: {civils}')
+
+
+
+
+		
 			
 				
 				

@@ -22,4 +22,14 @@ helloWords = [
 	'привет',
 	'здоров'
 ]
+
+mafia = dict(
+	minPlayers = dict(
+		mafia = 5,
+		sherif = 5,
+		doctor = 5,
+		pytana = 7,
+		)
+
+	)
 	
