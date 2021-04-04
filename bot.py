@@ -52,50 +52,6 @@ client = commands.Bot( command_prefix = config['prefix'], intents = discord.Inte
 
 
 
-
-
-
-@client.command(pass_context = True)
-#команда для гри в камінь-нодиці-папір
-async def ssp (ctx, course = None):
-	user = ctx.message.author
-
-	course_index = None
-	course_list = ['камінь', 'ножиці', 'папір']
-	course_bot = random.randint(0, 2)
-	
-	for index, x in enumerate(course_list):
-		if course == x:
-			course_index = index
-			break
-	if course == None:
-		await ctx.send(embed = discord.Embed(description = f'{user.mention} Це команда для гри в камінь-ножиці-папір!\nНапишіть в чат команду "$ssp" і назву дії(камінь, ножиці, папір).\nНаприклад: $ssp камінь', color = 0x4D4D4D))
-	elif course_index != None:
-		if course_index == course_bot:
-			await ctx.send(embed = discord.Embed(description = f'{user.mention} {course_list[course_bot]}\nНічия!', color = 0x4D4D4D))
-		elif course_index - course_bot == 1 or course_index - course_bot == -2:
-			await ctx.send(embed = discord.Embed(description = f'{user.mention} {course_list[course_bot]}\nПеремога бота!', color = 0x4D4D4D))
-		elif course_bot - course_index == 1 or course_bot - course_index == -2:
-			await ctx.send(embed = discord.Embed(description = f'{user.mention} {course_list[course_bot]}\nПереміг {user.display_name}!', color = 0x4D4D4D))
-	else:
-		await ctx.send(f'{user.mention} Назва ходу була введена неправильно!!!')
-
-@client.command(pass_context = True)
-#команда для видалення багатьох повідомлень в даному текстовому каналі
-async def clear(ctx, count = 0):
-	permissions = False
-	user = ctx.message.author
-	author_roles = user.roles
-	for role in author_roles:
-		if str(role) == 'leader' or str(role) == 'admin' or str(role) == 'guard':
-			permissions = True
-			break
-
-	if permissions == True:
-		await ctx.channel.purge(limit = count + 1)
-	else:
-		await ctx.channel.send(f'_{user.mention}, у вас немає ролей, які дозволяють виконувати цю команду!_')
-
 @client.command(pass_context = True)
 #команда для приєднання бота до голосового каналу
 async def join(ctx):
@@ -120,64 +76,7 @@ async def leave(ctx):
 		voice = await channel.connect()
 
 	
-@client.command(pass_context = True)
-#команда для остримання безкінечного посилання на сервер
-async def link(ctx):
-	link = 'https://discord.gg/9CAQe3aW8P'
-	await ctx.send(f'{ctx.message.author.mention} лови посилання на сервер! {link}')
 
-@client.command(pass_context = True)
-
-async def event(ctx, action=None):
-	permissions = False
-	user = ctx.message.author
-	author_roles = user.roles
-	for role in author_roles:
-		if str(role) == 'leader' or str(role) == 'admin' or str(role) == 'guard': 
-			permissions = True
-			break
-	current_datetime = datetime.now()
-	channel = client.get_channel(720915216174415963)
-	if action == 'start':
-		if current_datetime.weekday() == 4 or current_datetime.weekday() == 6:
-			await channel.send(f'@everyone  Івент розпочався')
-			for member in client.get_all_members():
-				for role in member.roles:
-					if str(role) == 'leader' or str(role) == 'admin' or str(role) == 'guard':
-						await member.send('Івент щойно розпочався. Приєднуйся до нас!')
-		else:
-			await ctx.send(f'{user.mention} Сьогодні немає івенту!')
-	elif action == 'notif':
-		if current_datetime.weekday() == 4:
-			await channel.send(f'@everyone Сьогодні о 18:30  по Києву буде івент!')
-		elif current_datetime.weekday() == 6:
-			await channel.send(f'@everyone Сьогодні о 16:30  по Києву буде івент!')
-		else:
-			await ctx.send(f'{user.mention} Сьогодні немає івенту!')
-
-
-@client.command(pass_context = True)
-
-async def ban(ctx, target: discord.Member):
-	for role in ctx.author.roles:
-		if str(role) == 'leader':
-			await target.ban()
-
-
-@client.command(pass_context = True)
-
-async def unban(ctx, target: discord.Member):
-	for role in ctx.author.roles:
-		if str(role) == 'leader':
-			await target.unban()
-
-
-@client.command(pass_context = True)
-
-async def kick(ctx, target: discord.Member):
-	for role in ctx.author.roles:
-		if str(role) == 'leader':
-			await target.kick()
 			
 """			
 @client.event

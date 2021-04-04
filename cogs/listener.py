@@ -61,35 +61,7 @@ class User(commands.Cog):
 			if randint(0, 100) <= 2:
 				emojis = message.guild.emojis
 				emoji = emojis[randint(0, len(emojis) - 1)]
-				await message.add_reaction(emoji)
-
-
-
-
-	@commands.command(aliases=['час'])
-	#команда для виводу часу по GMT+2
-	async def time (self, ctx):
-		current_datetime = datetime.now()
-		time = f'{current_datetime.hour + 2} : {current_datetime.minute} : {current_datetime.second}'
-		await ctx.send(embed = discord.Embed(description = f'{ctx.message.author.mention} дійсний час по GMT +2 --> {time}', color = 0x4D4D4D))
-
-	@commands.command()
-	#команда виводу загальної публічної інформації сервера
-	async def info(self, ctx):
-
-		guild = ctx.message.guild
-
-		server_created = guild.created_at.strftime('%d.%m.%y %H:%M:%S')
-		server_created_datetime = guild.created_at
-
-
-		await ctx.send(embed = discord.Embed(
-			description = (f'Сервер було створено: {server_created}\n Творець сервера: {guild.owner.display_name}'), 
-			title = 'ЗАГАЛЬНА ІНФОРМАЦІЯ ПРО СЕРВЕР', 
-			color = 0x4D4D4D))
-			
-				
-				
+				await message.add_reaction(emoji)				
 		
 
 
