@@ -124,7 +124,7 @@ class User(commands.Cog):
 
 	@commands.command()
 	
-	async def mafia(self, ctx, arg1 = None, arg2 = None, arg3 = None):
+	async def mafia(self, ctx, arg1 = None, arg2 = None, arg3 = None, arg4 = None):
 		if arg1 == 'game':
 			if arg2 == 'calculation' or arg2 == 'make':
 				if arg3 == None:
@@ -156,15 +156,22 @@ class User(commands.Cog):
 					players['civils'] = players['count'] - mafias - sherifs - doctors - pytanas
 					civils = players['civils']
 
-					await ctx.message.author.send(f'Кількість мафії: {mafias} Кількість шерифів: {sherifs} Кількість лікарів: {doctors} Кількість повій: {pytanas} Кількість мирних: {civils}')
+					#await ctx.message.author.send(f'Кількість мафії: {mafias} Кількість шерифів: {sherifs} Кількість лікарів: {doctors} Кількість повій: {pytanas} Кількість мирних: {civils}')
 					if arg2 == 'make':
 						channel = ctx.message.author.voice.channel
 						
 						print(len(channel.members))
 						if channel != None:
 							if len(channel.members) + 5 >= players['count']:
+								#await ctx.message.channel.send(f'{ctx.message.author.mention} все чотко')
+								i = len(channel.members) - 1
+								while i >= 0:
+									channel.member[i].edit()
+									print(channel.members[i])
+									i = i - 1
 
-								await ctx.message.channel.send(f'{ctx.message.author.mention} все чотко')
+
+
 							else:
 								await ctx.message.channel.send(f'{ctx.message.author.mention} вас мало')
 						else:
