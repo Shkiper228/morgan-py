@@ -68,7 +68,7 @@ class User(commands.Cog):
 
 	@commands.command()
 
-	async def event(ctx, action=None):
+	async def event(self, ctx, action=None):
 		permissions = False
 		user = ctx.message.author
 		author_roles = user.roles
@@ -76,7 +76,8 @@ class User(commands.Cog):
 			if str(role) == 'leader' or str(role) == 'admin' or str(role) == 'guard': 
 				permissions = True
 				break
-		current_datetime = datetime.now()
+		tz = pytz.timezone('Europe/Kiev')
+		current_datetime = datetime.now(tz)
 		channel = client.get_channel(720915216174415963)
 		if action == 'start':
 			if current_datetime.weekday() == 4 or current_datetime.weekday() == 6:
@@ -124,9 +125,11 @@ class User(commands.Cog):
 	
 	async def mafia(self, ctx, arg1 = None, arg2 = None, arg3 = None):
 		if arg1 == 'game':
-			if arg2 == 'calculation':
+			if arg2 == 'calculation' or arg2 == 'make':
 				if arg3 == None:
 					await ctx.message.channel.send(f'{ctx.message.author.mention} вкажіть кількість гравців без ведучого')
+				elif int(arg3) % 1 != 0:
+					await ctx.message.channel.send(f'{ctx.message.author.mention} вкажіть кількість гравців цілим цислом!')
 				elif int(arg3) < 5:
 					await ctx.message.channel.send(f'{ctx.message.author.mention} потрібно більше гравців!')
 				else:
@@ -139,7 +142,7 @@ class User(commands.Cog):
 						pytanas = None,
 						civils = None
 						)
-
+	
 					#calculation counts for roles
 					players['mafias'] = math.floor(players['count'] / mafia['minPlayers']['mafia'])
 					mafias = players['mafias']
@@ -153,6 +156,13 @@ class User(commands.Cog):
 					civils = players['civils']
 
 					await ctx.message.author.send(f'Кількість мафії: {mafias} Кількість шерифів: {sherifs} Кількість лікарів: {doctors} Кількість повій: {pytanas} Кількість мирних: {civils}')
+					if arg2 == 'make':
+						if ctx.message.author.voice != None:
+							print(ctx.message.author.voice)
+							await ctx.message.channel.send(f'{ctx.message.author.mention}')
+						else:
+							await ctx.message.channel.send(f'{ctx.message.author.mention} для облаштування гри потрібно, аби ви були в голосовому каналі')
+
 
 
 
