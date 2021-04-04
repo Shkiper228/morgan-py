@@ -78,11 +78,11 @@ class User(commands.Cog):
 				break
 		tz = pytz.timezone('Europe/Kiev')
 		current_datetime = datetime.now(tz)
-		channel = client.get_channel(720915216174415963)
+		channel = self.client.get_channel(720915216174415963)
 		if action == 'start':
 			if current_datetime.weekday() == 4 or current_datetime.weekday() == 6:
 				await channel.send(f'@everyone  Івент розпочався')
-				for member in client.get_all_members():
+				for member in self.client.get_all_members():
 					for role in member.roles:
 						if str(role) == 'leader' or str(role) == 'admin' or str(role) == 'guard':
 							await member.send('Івент щойно розпочався. Приєднуйся до нас!')
