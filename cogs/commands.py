@@ -162,7 +162,11 @@ class User(commands.Cog):
 						
 						print(len(channel.members))
 						if channel != None:
-							await ctx.message.channel.send(f'{ctx.message.author.mention}')
+							if len(channel.members) + 5 >= players['count']:
+
+								await ctx.message.channel.send(f'{ctx.message.author.mention} все чотко')
+							else:
+								await ctx.message.channel.send(f'{ctx.message.author.mention} вас мало')
 						else:
 							await ctx.message.channel.send(f'{ctx.message.author.mention} для облаштування гри потрібно, аби ви були в голосовому каналі')
 
