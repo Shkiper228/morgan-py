@@ -21,8 +21,9 @@ class User(commands.Cog):
 	async def time (self, ctx):
 		tz = get_localzone()
 		current_datetime = datetime.now(tz)
-		time = f'{current_datetime.hour + 2} : {current_datetime.minute} : {current_datetime.second}'
-		await ctx.send(embed = discord.Embed(description = f'{ctx.message.author.mention} дійсний час по GMT +2 --> {time}', color = 0x4D4D4D))
+
+		time = f'{current_datetime.hour} : {current_datetime.minute} : {current_datetime.second}'
+		await ctx.send(embed = discord.Embed(description = f'{ctx.message.author.mention} дійсний місцевий час --> {time}', color = 0x4D4D4D))
 
 	@commands.command()
 	#команда виводу загальної публічної інформації сервера
