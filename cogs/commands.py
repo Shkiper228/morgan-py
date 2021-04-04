@@ -6,6 +6,7 @@ import sqlite3
 from threading import Thread
 from datetime import datetime, tzinfo, timedelta
 from tzlocal import get_localzone
+import pytz
 from time import sleep
 from discord.utils import get
 from config import config, channels
@@ -19,8 +20,10 @@ class User(commands.Cog):
 	@commands.command(aliases=['час'])
 	#команда для виводу часу по GMT+2
 	async def time (self, ctx):
-		tz = get_localzone()
+		tz = pytz.timezone('Europe/Kiev')
 		current_datetime = datetime.now(tz)
+
+
 
 		time = f'{current_datetime.hour} : {current_datetime.minute} : {current_datetime.second}'
 		await ctx.send(embed = discord.Embed(description = f'{ctx.message.author.mention} дійсний місцевий час --> {time}', color = 0x4D4D4D))
