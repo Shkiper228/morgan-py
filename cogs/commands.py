@@ -135,25 +135,23 @@ class User(commands.Cog):
 					await ctx.message.channel.send(f'{ctx.message.author.mention} потрібно більше гравців!')
 				else:
 					from config import mafia
-					players = dict(
-						count = int(arg3),
-						mafias = None,
-						sherifs = None,
-						doctors = None,
-						pytanas = None,
-						civils = None
-						)
+					players_count = arg3
+					players = []
 	
 					#calculation counts for roles
-					players['mafias'] = math.floor(players['count'] / mafia['minPlayers']['mafia'])
+					i = 0
+					while i < 5:
+						
+						i = i + 1
+					players['mafias'] = math.floor(players_count / mafia['minPlayers']['mafia'])
 					mafias = players['mafias']
-					players['sherifs'] = math.floor(players['count'] / mafia['minPlayers']['sherif'])
+					players['sherifs'] = math.floor(players_count / mafia['minPlayers']['sherif'])
 					sherifs = players['sherifs']
-					players['doctors'] = math.floor(players['count'] / mafia['minPlayers']['doctor'])
+					players['doctors'] = math.floor(players_count / mafia['minPlayers']['doctor'])
 					doctors = players['doctors']
-					players['pytanas'] = math.floor(players['count'] / mafia['minPlayers']['pytana'])
+					players['pytanas'] = math.floor(players_count / mafia['minPlayers']['pytana'])
 					pytanas = players['pytanas']
-					players['civils'] = players['count'] - mafias - sherifs - doctors - pytanas
+					players['civils'] = players_count - mafias - sherifs - doctors - pytanas
 					civils = players['civils']
 
 					#await ctx.message.author.send(f'Кількість мафії: {mafias} Кількість шерифів: {sherifs} Кількість лікарів: {doctors} Кількість повій: {pytanas} Кількість мирних: {civils}')
@@ -162,13 +160,58 @@ class User(commands.Cog):
 						
 						print(len(channel.members))
 						if channel != None:
-							if len(channel.members) + 5 >= players['count']:
-								#await ctx.message.channel.send(f'{ctx.message.author.mention} все чотко')
-								i = len(channel.members) - 1
-								while i >= 0:
-									channel.member[i].edit()
-									print(channel.members[i])
-									i = i - 1
+							if len(channel.members) - 1 >= players_count:
+								guiding = arg4
+								if arg4 == None:
+									guiding = ctx.message.author
+
+								print(guiding)
+								await ctx.message.channel.send(f'{ctx.message.author.mention} все чотко')
+
+								numbers = []
+
+								m = 0
+								while m < players_count:
+									member = channel.members[m]
+									if member != guiding:
+										nick = str(m) + ' ' + member.display_name
+										#await member.edit(nick = nick)
+										print(member)
+									
+									m = m + 1
+
+
+								i = 0
+								print(f'кількість людей в голосовому {len(channel.members)}')
+								while i < players_count:
+									n = randint(1, players_count)
+									j = 0
+									perm = True
+									while j < i:
+										if n == numbers[j]:
+											perm = False
+										j = j + 1
+									if perm:
+										i = i + 1
+										numbers.append(n)
+									else:
+										continue
+
+								await ctx.message.author.send(f'{numbers}')
+								
+								code = dict(
+									mafias = [],
+									sherifs = [],
+									doctors = [],
+									pytanas = [],
+									civils = []
+									)
+
+								
+									
+
+								#await ctx.message.author.send(f'Кількість мафії: {mafias} Кількість шерифів: {sherifs} Кількість лікарів: {doctors} Кількість повій: {pytanas} Кількість мирних: {civils}')
+									
 
 
 
