@@ -24,7 +24,7 @@ class User(commands.Cog):
 	async def timer(self, ctx, time = 60):
 		await ctx.message.channel.send(f'Принято. За {time} секунд спрацює таймер!')
 		await asyncio.sleep(time)
-		await ctx.message.channel.send('Тік так йопти')
+		await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
 
 
 
