@@ -29,8 +29,9 @@ class User(commands.Cog):
 	@commands.command()
 	
 	async def clendar_start(self, ctx, time = 60):
+		await ctx.message.channel.send(f'{ctx.message.author.mention} Діагностичний таймер запущений')
 		while True:
-			await asyncio.sleep(1000)
+			await asyncio.sleep(5)
 		await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
 
 
