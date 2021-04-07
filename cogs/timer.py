@@ -19,22 +19,13 @@ class User(commands.Cog):
 	def __init__(self, client):
 		self.client = client
 
+
 	@commands.command()
 	
 	async def timer(self, ctx, time = 60):
 		await ctx.message.channel.send(f'Принято. За {time} секунд спрацює таймер!')
 		await asyncio.sleep(time)
 		await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
-
-	@commands.command()
-	
-	async def clendar_start(self, ctx, time = 60):
-		await ctx.message.channel.send(f'{ctx.message.author.mention} Діагностичний таймер запущений')
-		while True:
-			await asyncio.sleep(5)
-		await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
-
-
 
 
 def setup(client):

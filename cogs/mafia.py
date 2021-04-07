@@ -34,7 +34,6 @@ class User(commands.Cog):
 					from config import mafia
 					players_count = int(arg3)
 					players = [0,0,0,0,0]
-					print(players_count)
 					#calculation counts for roles
 					i = 0
 					while i < len(mafia['sequence']):
@@ -49,29 +48,30 @@ class User(commands.Cog):
 							
 						print(str(players[i]) + str(mafia['sequence'][i]))
 						i = i + 1
-					#await ctx.message.author.send(f'Кількість мафії: {mafias} Кількість шерифів: {sherifs} Кількість лікарів: {doctors} Кількість повій: {pytanas} Кількість мирних: {civils}')
-					if arg2 == 'make':
+					
 						channel = ctx.message.author.voice.channel
 						
 						print(len(channel.members))
 						if channel != None:
 							if len(channel.members) - 1 >= players_count:
-								guiding = arg4
+								guiding = ctx.message.guild.get_member_named(arg4)
 								if arg4 == None:
 									guiding = ctx.message.author
 
 								print('Ведучий ' + str(guiding))
-								#await ctx.message.channel.send(f'{ctx.message.author.mention} все чотко')
 
 								numbers = []
 
 								m = 0
 								while m < players_count + 1:
 									member = channel.members[m]
-									if str(member.display_name) != guiding:
-										nick = str(m) + ' ' + member.display_name
-										#await member.edit(nick = nick)
+									if member != guiding and member != ctx.message.guild.owner:
+										nick = str(m + 1) + ' ' + member.display_name
+										await member.edit(nick = nick)
 										print(member.display_name)
+									elif member == ctx.message.guild.owner:
+										await ctx.message.guild.owner.send('Добавте на початку свого нік-нейма будь-ласка, число ' + str(m + 1))
+
 									
 									m = m + 1
 
@@ -92,7 +92,6 @@ class User(commands.Cog):
 									else:
 										continue
 
-								await ctx.message.author.send(f'{numbers}')
 								print('Випадковий ряд чисел ' + str(numbers))
 								
 								code = [
@@ -122,23 +121,28 @@ class User(commands.Cog):
 
 
 								
+								m = 0
 								i = 0
 								string = ''
 								while i < players_count:
-									player_member = channel.members[i]
+									player_member = channel.members[m]
 									player_numeric = numbers[i]
+									if player_member == guiding:
+										m = m + 1
+										continue
 
 									a = 0
 									while a < len(code):
 										j = 0
 										while j < len(code[a]):
 											if code[a][j] == player_numeric:
-												string = string + f"{channel.members[i]} - {mafia['sequence'][a]}"
+												string = string + f"{player_member} - {mafia['sequence'][a]}" + "\n"
 											j = j + 1
 										a = a + 1
+									m = m + 1
 									i = i + 1 
 								print(string)
-								#await ctx.message.author.send(f'Кількість мафії: {mafias} Кількість шерифів: {sherifs} Кількість лікарів: {doctors} Кількість повій: {pytanas} Кількість мирних: {civils}')
+								await guiding.send(string)
 									
 
 
