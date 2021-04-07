@@ -26,6 +26,13 @@ class User(commands.Cog):
 		await asyncio.sleep(time)
 		await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
 
+	@commands.command()
+	
+	async def clendar_start(self, ctx, time = 60):
+		while True:
+			await asyncio.sleep(1000)
+		await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
+
 
 
 
