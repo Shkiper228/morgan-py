@@ -46,8 +46,8 @@ class User(commands.Cog):
 							players[i] = civils
 							
 							
-					print(str(players[i]) + str(mafia['sequence'][i]))
-					i = i + 1
+						print(str(players[i]) + str(mafia['sequence'][i]))
+						i = i + 1
 					
 					channel = ctx.message.author.voice.channel
 						
@@ -67,7 +67,7 @@ class User(commands.Cog):
 								member = channel.members[m]
 								if member != guiding and member != ctx.message.guild.owner:
 									nick = str(m + 1) + ' ' + member.display_name
-									#await member.edit(nick = nick)
+									await member.edit(nick = nick)
 									print(member.display_name)
 								elif member == ctx.message.guild.owner:
 									await ctx.message.guild.owner.send('Добавте на початку свого нік-нейма будь-ласка, число ' + str(m + 1))
