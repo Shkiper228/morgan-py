@@ -69,10 +69,8 @@ class User(commands.Cog):
 									nick = str(m) + ' ' + member.display_name
 									await member.edit(nick = nick)
 									print(member.display_name)
-								elif member == ctx.message.guild.owner or member.bot:
+								elif member == ctx.message.guild.owner:
 									await member.send('Добавте на початку свого нік-нейма будь-ласка, число ' + str(m))
-
-									
 								m = m + 1
 
 
