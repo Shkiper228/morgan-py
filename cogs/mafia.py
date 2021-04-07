@@ -63,14 +63,14 @@ class User(commands.Cog):
 							numbers = []
 
 							m = 0
-							while m < players_count + 1:
+							while m < players_count:
 								member = channel.members[m]
 								if member != guiding and member != ctx.message.guild.owner and member.bot != True:
-									nick = str(m + 1) + ' ' + member.display_name
+									nick = str(m) + ' ' + member.display_name
 									await member.edit(nick = nick)
 									print(member.display_name)
 								elif member == ctx.message.guild.owner or member.bot:
-									await ctx.message.guild.owner.send('Добавте на початку свого нік-нейма будь-ласка, число ' + str(m + 1))
+									await member.send('Добавте на початку свого нік-нейма будь-ласка, число ' + str(m))
 
 									
 								m = m + 1
