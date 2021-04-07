@@ -24,12 +24,19 @@ helloWords = [
 ]
 
 mafia = dict(
-	minPlayers = dict(
-		mafia = 5,
-		sherif = 5,
-		doctor = 5,
-		pytana = 7,
-		)
+	minPlayers = [
+		5, 	#mafia
+		5, 	#sherif
+		5,	#doctor
+		7 	#putana
+		],
+	sequence = [
+		'mafia',
+		'sherif',
+		'doctor',
+		'putana',
+		'civils'
+	]
 
 	)
 	

@@ -47,18 +47,18 @@ class User(commands.Cog):
 		permission = True
 
 		
+		if message.is_system():
+			for role in message.author.roles:
+				if str(role) in banRoles:
+					permission = False
 	
-		for role in message.author.roles:
-			if str(role) in banRoles:
-				permission = False
-
-		if permission:
-			if msg in helloWords:
-				await message.channel.send(f'{helloWords[randint(0, len(helloWords) - 1)]}')
-			if randint(0, 100) <= 2:
-				emojis = message.guild.emojis
-				emoji = emojis[randint(0, len(emojis) - 1)]
-				await message.add_reaction(emoji)				
+			if permission:
+				if msg in helloWords:
+					await message.channel.send(f'{helloWords[randint(0, len(helloWords) - 1)]}')
+				if randint(0, 100) <= 2:
+					emojis = message.guild.emojis
+					emoji = emojis[randint(0, len(emojis) - 1)]
+					await message.add_reaction(emoji)				
 		
 
 
