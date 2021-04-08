@@ -25,12 +25,12 @@ class User(commands.Cog):
 		connection = sqlite3.connect('Morgan.db')
 		cursor = connection.cursor()
 
-		cursor.execute(CREATE TABLE IF NOT EXISTS users (
-				name TEXT,
-				id INT,
-				lvl INT,
-				guild TEXT
-			))
+		cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+			name TEXT,
+			id INT,
+			lvl INT,
+			guild TEXT
+			)''')
 
 		for guild in self.client.guilds:
 			for member in guild.members:
