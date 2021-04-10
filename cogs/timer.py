@@ -30,7 +30,9 @@ class User(commands.Cog):
 
 			tz = pytz.timezone('Europe/Kiev')
 			current_datetime = datetime.now(tz)
-			current_wday = current_datetime.weekday
+
+			current_wday = current_datetime.weekday()
+			print('День тижня:' + str(current_wday))
 			current_day = current_datetime.day
 			current_month = current_datetime.month
 			current_year = current_datetime.year
@@ -41,8 +43,13 @@ class User(commands.Cog):
 			i = 0
 			print(f'Кількість записів {len(reminders)}')
 			while i < len(reminders):
+				channel = self.client.get_channel(record['everyone'])
 				record = reminders[i]
 				print(record)
+				if record['everyone']:
+					alert = f"@everyone {record['alert']}" 
+				else:
+					alert = record['alert']
 
 				if record['date'] != None:
 					print(record['date'])
@@ -53,6 +60,7 @@ class User(commands.Cog):
 					day = date.day
 
 					if current_month == month and current_day == day:
+
 						if record['time'] != None:
 
 							time = datetime.strptime(record['time'], '%H:%M')
@@ -61,9 +69,17 @@ class User(commands.Cog):
 							minute = time.minute
 							print(current_minute)
 							print(minute)
-	
-							if current_hour == hour and current_minute == minute:
-								await channel.send(record['alert'])
+							
+							if record['wday'] != None:
+								print(current_wday)
+								print('День тижня запису' + str(record['wday']))
+								if str(current_wday) == record['wday']:
+									if current_hour == hour and current_minute == minute:
+										await channel.send(alert)
+
+							else:
+								if current_hour == hour and current_minute == minute:
+									await channel.send(alert)
 
 				else:
 					if record['time'] != None:
@@ -73,9 +89,9 @@ class User(commands.Cog):
 						minute = time.minute
 
 						if current_hour == hour and current_minute == minute:
-							await channel.send(record['alert'])
+							await channel.send(alert)
 
-							
+
 					print('У записі немає дати')
 
 

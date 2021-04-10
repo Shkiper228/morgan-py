@@ -45,17 +45,19 @@ mafia = dict(
 reminders = [
 	dict(
 		date = '10.04.2021', #date
-		wday = [4], #weekday
-		time = '18:30', #time
-		alert = 'Нагадування спрацювало', #alert
-		channel = 720915216174415963 #channel id
+		wday = '5', #weekday
+		time = '20:13', #time
+		alert = 'Івент розпочався', #alert
+		channel = 720915216174415963, #channel id
+		everyone = False
 	),
 
 	dict(
 		date = '10.04.2021', #date
-		wday = [6], #weekday
+		wday = '6', #weekday
 		time = '19:36', #time
-		alert = 'Нагадування спрацювало', #alert
-		channel = 720915216174415963 #channel id
+		alert = 'Івент розпочався', #alert
+		channel = 720915216174415963, #channel id
+		everyone = False
 	)
 ]
