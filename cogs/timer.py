@@ -43,8 +43,8 @@ class User(commands.Cog):
 			i = 0
 			print(f'Кількість записів {len(reminders)}')
 			while i < len(reminders):
-				channel = self.client.get_channel(record['everyone'])
 				record = reminders[i]
+				channel = self.client.get_channel(record['channel'])
 				print(record)
 				if record['everyone']:
 					alert = f"@everyone {record['alert']}" 
