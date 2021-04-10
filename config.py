@@ -46,7 +46,7 @@ reminders = [
 	dict(
 		date = '10.04.2021', #date
 		wday = '5', #weekday
-		time = '20:13', #time
+		time = '20:32', #time
 		alert = 'Івент розпочався', #alert
 		channel = 720915216174415963, #channel id
 		everyone = False
