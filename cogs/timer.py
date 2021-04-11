@@ -103,10 +103,16 @@ class User(commands.Cog):
 
 	@commands.command()
 	
-	async def timer(self, ctx, time = 60):
-		await ctx.message.channel.send(f'Принято. За {time} секунд спрацює таймер!')
-		await asyncio.sleep(time)
-		await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
+	async def timer(self, ctx, time):
+		if time == None:
+			time = 60
+		if time == 'bump':
+			time = 4*60*60
+			await ctx.message.channel.send(f'Принято. За {time} секунд спрацює таймер!')
+		else:
+			await ctx.message.channel.send(f'Принято. За {time} секунд спрацює таймер!')
+			await asyncio.sleep(time)
+			await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
 
 
 def setup(client):
