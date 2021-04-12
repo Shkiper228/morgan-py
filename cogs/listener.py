@@ -41,6 +41,7 @@ class User(commands.Cog):
 	@commands.Cog.listener()
 
 	async def on_message(self, message):
+		print(str(message.author) + str(message))
 		banRoles = ['bot']
 		from config import helloWords
 		msg = message.content.lower()

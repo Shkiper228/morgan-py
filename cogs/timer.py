@@ -87,9 +87,10 @@ class User(commands.Cog):
 
 						hour = time.hour
 						minute = time.minute
+						if str(current_wday) == record['wday']:
 
-						if current_hour == hour and current_minute == minute:
-							await channel.send(alert)
+							if current_hour == hour and current_minute == minute:
+								await channel.send(alert)
 
 
 					print('У записі немає дати')
@@ -104,17 +105,22 @@ class User(commands.Cog):
 	@commands.command()
 	
 	async def timer(self, ctx, time):
+		print(time)
+
+
 		if time == None:
 			time = 60
+			print(time)
 		if time == 'bump':
 			time = 4*60*60
 			await ctx.message.channel.send(f'Принято. За {time} секунд спрацює таймер!')
-			await asyncio.sleep(time)
+			await asyncio.sleep(str(time))
 			await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
 		else:
 			await ctx.message.channel.send(f'Принято. За {time} секунд спрацює таймер!')
-			await asyncio.sleep(time)
+			await asyncio.sleep(str(time))
 			await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
+
 
 
 def setup(client):
