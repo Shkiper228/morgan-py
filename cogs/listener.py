@@ -41,14 +41,14 @@ class User(commands.Cog):
 	@commands.Cog.listener()
 
 	async def on_message(self, message):
-		print(str(message.author) + str(message))
+		print(str(message.author) + str(message.content))
 		banRoles = ['bot']
 		from config import helloWords
 		msg = message.content.lower()
 		permission = True
 
 		
-		if message.is_system():
+		if message.author.bot != True:
 			for role in message.author.roles:
 				if str(role) in banRoles:
 					permission = False
@@ -56,7 +56,7 @@ class User(commands.Cog):
 			if permission:
 				if msg in helloWords:
 					await message.channel.send(f'{helloWords[randint(0, len(helloWords) - 1)]}')
-				if randint(0, 100) <= 2:
+				if randint(0, 100) <= 50:
 					emojis = message.guild.emojis
 					emoji = emojis[randint(0, len(emojis) - 1)]
 					await message.add_reaction(emoji)				
