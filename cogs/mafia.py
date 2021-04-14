@@ -21,8 +21,90 @@ class User(commands.Cog):
 
 	@commands.command()
 	
-	async def mafia(self, ctx, arg1 = None, arg2 = None, arg3 = None, arg4 = None):
-		if arg1 == 'game':
+	async def mafia(self, ctx, action = None, count = None, guiding = None):
+
+		#import
+		from config import mafia
+
+		#ініціалізація
+		channel = ctx.message.channel
+		author = ctx.message.author
+		mention = author.mention
+		try:
+			players_count = int(count)
+
+		except:
+			await channel.send(embed = discord.Embed(description = f'{mention} Введіть коректну кількість гравців!', color = 0x4D4D4D))
+		
+
+		if action == 'calculation':
+			print(action)
+
+			count_role = []
+			random_numbers = []
+			sequence_role = []
+
+
+			total_count = 0
+
+			s = 0
+			r = 0
+			m = 1
+			while r < len(mafia['sequence']):
+				sequence_role.append([])
+				if mafia['sequence'][r] != 'civils':
+					count_role.append(math.floor(players_count / mafia['minPlayers'][r]))
+					total_count = total_count + count_role[r]
+
+				else:
+					count_role.append(players_count - total_count)
+
+
+				j = 0
+				while j < count_role[r]:
+					sequence_role[r].append(m)
+					j = j + 1
+					m = m + 1
+
+				r = r + 1
+
+
+			m = 0
+			while m < players_count:
+				n = randint(1, players_count)
+				perm = True
+
+				j = 0
+				while j < len(random_numbers):
+					if n == random_numbers[j]:
+						perm = False
+
+					j = j + 1
+
+				if perm:
+					random_numbers.append(n)
+				else:
+					continue
+
+				m = m + 1
+
+
+			await author.send(embed = discord.Embed(description= f'Ряд випадкових чисел {random_numbers}\n Розшифрування ролей {sequence_role}'))
+			print(f'Кількість гравців {count_role}')
+			print(f'Ряд випадкових чисел {random_numbers}')
+			print(f'Розшифрування ролей {sequence_role}')
+
+
+
+		elif action == 'make':
+			print(action)
+		else:
+			await channel.send(embed = discord.Embed(description = f'{mention} Такої дії не існує! \n Можливі дії: calculation(не робоча) і make(теж неробоча)', color = 0x4D4D4D))
+
+
+
+
+			"""
 			if arg2 == 'calculation' or arg2 == 'make':
 				if arg3 == None:
 					await ctx.message.channel.send(f'{ctx.message.author.mention} вкажіть кількість гравців без ведучого')
@@ -33,21 +115,20 @@ class User(commands.Cog):
 				else:
 					from config import mafia
 					players_count = int(arg3)
-					players = [0,0,0,0,0]
+					count_role = [0,0,0,0,0]
 					#calculation counts for roles
-					i = 0
-					while i < len(mafia['sequence']):
-						if mafia['sequence'][i] != 'civils':
-							players[i] = math.floor(players_count / mafia['minPlayers'][i])
+					total_count = 0
+					r = 0
+					while r < len(mafia['sequence']):
+						if mafia['sequence'][r] != 'civils':
+							count_role[r] = math.floor(players_count / mafia['minPlayers'][r])
+							count_withoutCivils = total_count + count_role
 						else:
-							civils = players_count
-							for count in players:
-								civils = civils - count
-							players[i] = civils
+							count_role[r] = players_count - count_withoutCivils
 							
 							
-						print(str(players[i]) + str(mafia['sequence'][i]))
-						i = i + 1
+						print(str(players[r]) + str(mafia['sequence'][r]))
+						r = r + 1
 					
 					channel = ctx.message.author.voice.channel
 						
@@ -149,7 +230,7 @@ class User(commands.Cog):
 							await ctx.message.channel.send(f'{ctx.message.author.mention} вас мало')
 					else:
 						await ctx.message.channel.send(f'{ctx.message.author.mention} для облаштування гри потрібно, аби ви були в голосовому каналі')
-
+	"""
 
 
 
