@@ -35,6 +35,11 @@ class User(commands.Cog):
 
 		except:
 			await channel.send(embed = discord.Embed(description = f'{mention} Введіть коректну кількість гравців!', color = 0x4D4D4D))
+
+		if players_count > 200:
+			await channel.send(embed = discord.Embed(description = f'{mention} Введена кількість гравців занадто велика!', color = 0x4D4D4D))
+			return
+
 		
 
 		if action == 'calculation':
