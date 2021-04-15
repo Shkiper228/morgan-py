@@ -94,7 +94,22 @@ class User(commands.Cog):
 				m = m + 1
 
 
-			await author.send(embed = discord.Embed(description= f'Ряд випадкових чисел {random_numbers}\n Розшифрування ролей {sequence_role}'))
+			m = 0
+			r = 0
+			string = ''
+			while r < len(mafia['sequence']):
+
+				j = 0
+				while j < len(sequence_role[r]):
+					string = string + f'Гравець під номером {random_numbers[m]} є: {mafia["sequence"][r]}\n'
+					j = j + 1
+					m = m + 1
+
+				r = r + 1
+
+
+			string = string + f'Ряд випадкових чисел {random_numbers}\n Розшифрування ролей {sequence_role}'
+			await author.send(embed = discord.Embed(description = string))
 			print(f'Кількість гравців {count_role}')
 			print(f'Ряд випадкових чисел {random_numbers}')
 			print(f'Розшифрування ролей {sequence_role}')
