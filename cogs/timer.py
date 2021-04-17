@@ -113,12 +113,14 @@ class User(commands.Cog):
 			print(time)
 		if time == 'bump':
 			time = 4*60*60
+			print(time)
 			await ctx.message.channel.send(f'Принято. За {time} секунд спрацює таймер!')
-			await asyncio.sleep(str(time))
+			await asyncio.sleep(int(time))
 			await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
 		else:
+			print(time)
 			await ctx.message.channel.send(f'Принято. За {time} секунд спрацює таймер!')
-			await asyncio.sleep(str(time))
+			await asyncio.sleep(int(time))
 			await ctx.message.channel.send(f'{ctx.message.author.mention} Таймер завершився!')
 
 
