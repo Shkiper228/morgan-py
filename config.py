@@ -49,7 +49,7 @@ reminders = [
 		time = '18:30', #time
 		alert = 'Івент розпочався', #alert
 		channel = 720915216174415963, #channel id
-		everyone = False
+		everyone = True
 	),
 
 	dict(
@@ -58,6 +58,6 @@ reminders = [
 		time = '16:30', #time
 		alert = 'Івент розпочався', #alert
 		channel = 720915216174415963, #channel id
-		everyone = False
+		everyone = True
 	)
 ]
