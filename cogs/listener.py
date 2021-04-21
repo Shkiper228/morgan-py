@@ -17,8 +17,8 @@ class User(commands.Cog):
 	@commands.Cog.listener()
 	async def on_ready(self):
 			print('Connect success!!!')
-			channel = self.client.get_channel(704660113750884433)
-			# await channel.send('Успішний запуск')
+			channel = self.client.get_channel(channels['test'])
+			await channel.send('Успішний запуск')
 
 
 	@commands.Cog.listener()
