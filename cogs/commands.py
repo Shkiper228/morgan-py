@@ -36,9 +36,16 @@ class User(commands.Cog):
 		server_created = guild.created_at.strftime('%d.%m.%y %H:%M:%S')
 		server_created_datetime = guild.created_at
 
+		member_count = guild.member_count
+		member_online_count = 0
+		for member in guild.members:
+			print(member.desktop_status)
+			if str(member.desktop_status) != 'offline' or str(member.mobile_status) != 'offline':
+				member_online_count = member_online_count + 1
+
 
 		await ctx.send(embed = discord.Embed(
-			description = (f'Сервер було створено: {server_created}\n Творець сервера: {guild.owner.display_name}'), 
+			description = (f'Сервер було створено: {server_created}\nТворець сервера: {guild.owner.display_name}\nЛюдей на сервері {member_count}⚫️\nЛюдей онлайн {member_online_count}🟢'), 
 			title = 'ЗАГАЛЬНА ІНФОРМАЦІЯ ПРО СЕРВЕР', 
 			color = 0x4D4D4D))
 
