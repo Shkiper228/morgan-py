@@ -39,7 +39,6 @@ class User(commands.Cog):
 		member_count = guild.member_count
 		member_online_count = 0
 		for member in guild.members:
-			print(member.desktop_status)
 			if str(member.desktop_status) != 'offline' or str(member.mobile_status) != 'offline':
 				member_online_count = member_online_count + 1
 
