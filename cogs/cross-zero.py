@@ -31,6 +31,20 @@ class User(commands.Cog):
 		duelists[0] = guild.get_member_named(duelist1)
 		duelists[1] = guild.get_member_named(duelist2)	 
 
+		print(duelists[0])
+		print(duelists[1])
+		print(cross_zero_numbers)
+
+		cross_zero_numbers[0][0] = '#'
+		cross_zero_numbers[0][1] = '#'
+		cross_zero_numbers[0][2] = '#'
+		cross_zero_numbers[1][0] = '#'
+		cross_zero_numbers[1][1] = '#'
+		cross_zero_numbers[1][2] = '#'
+		cross_zero_numbers[2][0] = '#'
+		cross_zero_numbers[2][1] = '#'
+		cross_zero_numbers[2][2] = '#'
+
 		if duelists[0] == None or duelists[1] == None:
 			await channel.send(embed = discord.Embed(description = 'Гравці були введені неправильно'))
 		else:
@@ -39,7 +53,7 @@ class User(commands.Cog):
 
 	@commands.command(aliases = ['tttremove', 'tttdelete', 'tttdestroy'])
 
-	async def __tic_tac_toe_delete(self, ctx, duelist1=None, duelist2=None):
+	async def __tic_tac_toe_delete(self, ctx):
 		guild = ctx.message.guild
 		channel = ctx.message.channel
 
@@ -48,6 +62,8 @@ class User(commands.Cog):
 		duelists[1] = None
 
 		cross_zero_numbers = [['#', '#', '#'], ['#', '#', '#'], ['#', '#', '#']]
+
+		print(cross_zero_numbers)
 		await channel.send(embed = discord.Embed(description = 'Гру видалено'))
 
 
@@ -72,15 +88,15 @@ class User(commands.Cog):
 			await channel.send(embed = discord.Embed(description = f'{author.mention} ти не учасник гри'))
 			return
 
-		
 
-		if ctx.message.author not in duelists:
-			return
-
-		string = ''
+		string = ' * -----------> x\n'
 
 		if cross_zero_numbers[y-1][x-1] == '#':
-			cross_zero_numbers[y-1][x-1] = char 
+			cross_zero_numbers[y-1][x-1] = char
+		elif cross_zero_numbers[y-1][x-1] != '#':
+			await channel.send(embed = discord.Embed(description = f'{author.mention} ця клітинка уже зайнята'))
+			return
+
 
 
 		#matrix
@@ -88,13 +104,19 @@ class User(commands.Cog):
 		while v < 3:
 			h = 0
 			while h < 3:
+				if h == 0:
+					string = string + ' | '
 				string = string + str(cross_zero_numbers[v][h]) + '\t'
 				h = h + 1
+
 
 			string = string + str('\n')
 			v = v + 1
 
-		await ctx.message.channel.send(string)
+
+
+		print(cross_zero_numbers)
+		await ctx.message.channel.send(f'{string}\\\/ y')
 
 
 
