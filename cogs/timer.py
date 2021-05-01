@@ -106,7 +106,7 @@ class User(commands.Cog):
 	
 	async def timer(self, ctx, time):
 		print(time)
-		time = time * 60
+		time = int(time) * 60
 
 		if time == None:
 			time = 60
