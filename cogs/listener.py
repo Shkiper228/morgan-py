@@ -12,13 +12,14 @@ class User(commands.Cog):
 
 	def __init__(self, client):
 		self.client = client
+		self.author = 506215900836265995
 
 
 	@commands.Cog.listener()
 	async def on_ready(self):
-			print('Connect success!!!')
-			channel = self.client.get_channel(channels['test'])
-			#await channel.send('Успішний запуск')
+		print('Connect success!!!')
+		channel = self.client.get_channel(channels['test'])
+		#await channel.send('Успішний запуск')
 
 
 	@commands.Cog.listener()
@@ -32,8 +33,8 @@ class User(commands.Cog):
 	@commands.Cog.listener()
 	#сповіщення про вихід учасника сервера
 	async def on_member_remove(self,  member ):
-			channel = self.client.get_channel(704660113750884433)
-			await channel.send(embed = discord.Embed(description = f'``{member.display_name}`` покинув нас!', color = 0x4D4D4D))	
+		channel = self.client.get_channel(704660113750884433)
+		await channel.send(embed = discord.Embed(description = f'``{member.display_name}`` покинув нас!', color = 0x4D4D4D))	
 
 
 
@@ -59,7 +60,15 @@ class User(commands.Cog):
 				if randint(0, 100) <= 2:
 					emojis = message.guild.emojis
 					emoji = emojis[randint(0, len(emojis) - 1)]
-					await message.add_reaction(emoji)				
+					await message.add_reaction(emoji)
+
+
+				if msg.find('https://discord.gg/') != -1 and msg.find('https://discord.gg/9CAQe3aW8P') == -1:
+					self.owner = message.guild.owner
+					await owner.send(f'{message.author} Рекламував посторонній сервер діскорд на твоєму сервері. Краще заблокуй його у себе')
+					await message.author.ban(reason = 'Реклама дс серверів', delete_message_days = 0)
+					await message.channel.purge(limit = 1)
+
 		
 
 
