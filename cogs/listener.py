@@ -42,35 +42,39 @@ class User(commands.Cog):
 	@commands.Cog.listener()
 
 	async def on_message(self, message):
-		print(f'[{message.author}] {message.content}')
+		print(f'[{message.author.name}] {message.content}')
 		banRoles = ['bot']
 		from config import helloWords
 		msg = message.content.lower()
+		author = message.author
 		permission = True
 
-		
+		#client-triger
 		if message.author.bot != True:
 			for role in message.author.roles:
 				if str(role) in banRoles:
 					permission = False
-	
+
 			if permission:
+				#hello-word say
 				if msg in helloWords:
 					await message.channel.send(f'{helloWords[randint(0, len(helloWords) - 1)]}')
+				#random reaction
 				if randint(0, 100) <= 2:
 					emojis = message.guild.emojis
 					emoji = emojis[randint(0, len(emojis) - 1)]
 					await message.add_reaction(emoji)
-
-
+				#add-ban ds servers for link
 				if msg.find('https://discord.gg/') != -1 and msg.find('https://discord.gg/9caqe3aw8p') == -1:
-					print(msg.find('https://discord.gg/9caqe3aw8p'))
-					print(msg)
 					self.owner = message.guild.owner
 					await self.owner.send(f'{message.author} Рекламував посторонній сервер діскорд на твоєму сервері. Краще заблокуй його у себе')
 					await message.author.send(f'Тебе було автоматично забанено на ``{message.guild.name}`` за рекламу посторонніх діскорд серверів')
 					await message.author.ban(reason = 'Реклама дс серверів', delete_message_days = 0)
 					await message.channel.purge(limit = 1)
+		else:
+			#bump
+			if author.name == 'Server Monitoring#8312':
+				print('bump!')
 
 		
 
