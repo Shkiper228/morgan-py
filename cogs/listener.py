@@ -42,7 +42,7 @@ class User(commands.Cog):
 	@commands.Cog.listener()
 
 	async def on_message(self, message):
-		print(f'[{message.author.name}] {message.content}')
+		print(f'[{message.author.name}#{message.author.discriminator}] {message.content}')
 		banRoles = ['bot']
 		from config import helloWords
 		msg = message.content.lower()
@@ -72,9 +72,13 @@ class User(commands.Cog):
 					await message.author.ban(reason = 'Реклама дс серверів', delete_message_days = 0)
 					await message.channel.purge(limit = 1)
 		else:
-			#bump
-			if author.name == 'Server Monitoring#8312':
+			if author.name + '#' + author.discriminator == 'Server Monitoring#8312':
 				print('bump!')
+				print(message.embeds[0].colour)
+				color = message.embeds[0].colour
+				if color == '#43B581':
+					await asyncio.sleep(4*60*60)
+					await ctx.message.channel.send(f'{ctx.message.author.mention} 4 години пройшло. Попроси інших, аби бампанули')
 
 		
 
