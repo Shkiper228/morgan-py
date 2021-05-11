@@ -63,7 +63,9 @@ class User(commands.Cog):
 					await message.add_reaction(emoji)
 
 
-				if msg.find('https://discord.gg/') != -1 and msg.find('https://discord.gg/9CAQe3aW8P') == -1:
+				if msg.find('https://discord.gg/') != -1 and msg.find('https://discord.gg/9caqe3aw8p') == -1:
+					print(msg.find('https://discord.gg/9caqe3aw8p'))
+					print(msg)
 					self.owner = message.guild.owner
 					await self.owner.send(f'{message.author} Рекламував посторонній сервер діскорд на твоєму сервері. Краще заблокуй його у себе')
 					await message.author.send(f'Тебе було автоматично забанено на ``{message.guild.name}`` за рекламу посторонніх діскорд серверів')
