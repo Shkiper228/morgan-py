@@ -75,7 +75,7 @@ class User(commands.Cog):
 			if author.name + '#' + author.discriminator == 'Server Monitoring#8312':
 				print('bump!')
 				print(message.embeds[0].colour)
-				color = message.embeds[0].colour
+				color = str(message.embeds[0].colour)
 				if color == '#43B581':
 					await asyncio.sleep(4*60*60)
 					await ctx.message.channel.send(f'{ctx.message.author.mention} 4 години пройшло. Попроси інших, аби бампанули')
