@@ -7,6 +7,7 @@ from datetime import datetime, tzinfo, timedelta
 from tzlocal import get_localzone
 import pytz
 from config import config, channels
+import asyncio
 
 class User(commands.Cog):
 
