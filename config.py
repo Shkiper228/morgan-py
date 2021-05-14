@@ -1,7 +1,4 @@
-import discord
-from discord.ext import commands
 
-client = commands.Bot( command_prefix = '!', intents = discord.Intents.all())
 
 config = {
 	'token': 'NjgxOTI5OTMxOTM2MzY2Njk2.XlVmvQ.uhW5wYzgeDQpGIlLLXvgsF5--4g',
