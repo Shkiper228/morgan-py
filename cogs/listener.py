@@ -26,7 +26,7 @@ class User(commands.Cog):
 	@commands.Cog.listener()
 	#сповіщення про нового учасника сервера
 	async def on_member_join(self, member ):
-		channel = self.client.get_channel(704690682920697875)
+		channel = self.client.get_channel(channels['new_users'])
 		role = discord.utils.get(member.guild.roles, id = 704691487857704980)
 		await member.add_roles( role )
 		await channel.send(embed = discord.Embed(description = f'{member.display_name} приєднався до нас!', color = 0x4D4D4D))
@@ -34,7 +34,7 @@ class User(commands.Cog):
 	@commands.Cog.listener()
 	#сповіщення про вихід учасника сервера
 	async def on_member_remove(self,  member ):
-		channel = self.client.get_channel(704660113750884433)
+		channel = self.client.get_channel(channels['console'])
 		await channel.send(embed = discord.Embed(description = f'``{member.display_name}`` покинув нас!', color = 0x4D4D4D))	
 
 
@@ -82,7 +82,12 @@ class User(commands.Cog):
 					await asyncio.sleep(4*60*60)
 					await ctx.message.channel.send(f'{message.author.mention} 4 години пройшло. Попроси інших, аби бампанули')
 
-		
+	@commands.Cog.listener()
+
+	async def on_reaction_add(self, reaction, user):
+		channel = self.client.get_channel(channels['info'])
+		print(f'{reaction} by {user}')
+
 
 
 def setup(client):

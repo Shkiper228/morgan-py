@@ -12,7 +12,8 @@ channels = {
 	'console': 704660113750884433,
 	'new_users': 704690682920697875,
 	'advertisement': 720915216174415963,
-	'test': 829048960479002685
+	'test': 829048960479002685,
+	'info': 842853700237656135
 }
 
 helloWords = [
@@ -58,6 +59,9 @@ reminders = [
 		everyone = True
 	)
 ]
+
+
+info = []
 
 
 
