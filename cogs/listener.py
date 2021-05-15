@@ -7,6 +7,7 @@ from datetime import datetime, tzinfo, timedelta
 from tzlocal import get_localzone
 import pytz
 from config import config, channels
+from os import listdir
 import asyncio
 
 class User(commands.Cog):
@@ -21,6 +22,65 @@ class User(commands.Cog):
 		print('Connect success!!!')
 		channel = self.client.get_channel(channels['test'])
 		#await channel.send('Успішний запуск')
+
+
+
+		channel = self.client.get_channel(channels['info'])
+		#await channel.send(embed = discord.Embed(title = '1'))
+		info_msg = await channel.fetch_message(843190334263787570)
+		#old_msg = await channel.fetch_message(channel.last_message_id)
+		#await old_msg.delete()
+		info_count = len(listdir('info'))
+
+		required_reactions = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '0️⃣']
+		reactions = info_msg.reactions
+
+
+
+		
+		r = 0
+		while r < len(required_reactions):
+			is_set = False
+			j = 0
+
+			while j < len(reactions):
+
+
+				if required_reactions[r] == str(reactions[j]):
+					is_set = True
+
+					if r >= info_count and str(reactions[j]) != required_reactions[9]:
+						await reactions[j].clear()
+					
+				j = j + 1
+			if is_set == False and r < info_count:
+				await info_msg.add_reaction(required_reactions[r])
+			
+
+			if r == 9:
+				is_set == False
+				for react in reactions:
+					if react == '0️⃣':
+						is_set = True
+
+				if is_set == False:
+					await info_msg.add_reaction(required_reactions[9])
+			r = r + 1
+
+		
+		info_file = open('info/' + str(listdir('info')[0]), encoding = 'utf-8')
+		info_str = info_file.readlines()
+
+		embed = discord.Embed(title = str(listdir('info')[0])[0:-4])
+
+		i = 0
+		for line in info_str:
+			i = i + 1
+			embed.add_field(name=f'_-|{i}|-_', value = line)
+
+		info_file.close()
+
+		await info_msg.edit(embed = embed)
 
 
 	@commands.Cog.listener()
@@ -84,10 +144,35 @@ class User(commands.Cog):
 
 	@commands.Cog.listener()
 
-	async def on_reaction_add(self, reaction, user):
-		channel = self.client.get_channel(channels['info'])
-		print(f'{reaction} by {user}')
+	async def on_raw_reaction_add(self, reaction):
+		from config import info
+		if reaction.member.bot == False and reaction.message_id == 843190334263787570:
+			channel = self.client.get_channel(channels['info'])
+			info_msg = await channel.fetch_message(843190334263787570)
+			info_count = len(listdir('info'))
 
+
+			if str(reaction.emoji) != '0️⃣':
+
+				info_file = open('info/' + str(listdir('info')[int(str(reaction.emoji)[0]) - 1]), encoding = 'utf-8')
+				info_str = info_file.readlines()
+	
+				embed = discord.Embed(title = str(listdir('info')[int(str(reaction.emoji)[0]) - 1])[0:-4])
+	
+				i = 0
+				for line in info_str:
+					i = i + 1
+					embed.add_field(name=f'_-|{i}|-_', value = line)
+	
+				info_file.close()
+			
+			else:
+				embed = discord.Embed(description = info, title = 'Зміст')
+
+			await info_msg.edit(embed = embed)
+			embed = None
+	
+			await info_msg.remove_reaction(emoji = reaction.emoji,member = reaction.member)
 
 
 def setup(client):
