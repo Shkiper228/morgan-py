@@ -32,40 +32,19 @@ class User(commands.Cog):
 		#await old_msg.delete()
 		info_count = len(listdir('info'))
 
-		required_reactions = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '0️⃣']
-		reactions = info_msg.reactions
+		required_reactions = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
 
 
 
+		await info_msg.clear_reactions()
 		
 		r = 0
-		while r < len(required_reactions):
-			is_set = False
-			j = 0
-
-			while j < len(reactions):
-
-
-				if required_reactions[r] == str(reactions[j]):
-					is_set = True
-
-					if r >= info_count and str(reactions[j]) != required_reactions[9]:
-						await reactions[j].clear()
-					
-				j = j + 1
-			if is_set == False and r < info_count:
-				await info_msg.add_reaction(required_reactions[r])
-			
-
-			if r == 9:
-				is_set == False
-				for react in reactions:
-					if react == '0️⃣':
-						is_set = True
-
-				if is_set == False:
-					await info_msg.add_reaction(required_reactions[9])
+		while True:
+			await info_msg.add_reaction(required_reactions[r])
 			r = r + 1
+
+			if r > info_count:
+				break
 
 		
 		info_file = open('info/' + str(listdir('info')[0]), encoding = 'utf-8')
@@ -167,7 +146,14 @@ class User(commands.Cog):
 				info_file.close()
 			
 			else:
-				embed = discord.Embed(description = info, title = 'Зміст')
+				i = 1
+				content = ''
+				for page in listdir('info'):
+					content = content + str(i) + ' - ' + str(page[0:-4]) + '\n'
+
+					i = i + 1
+
+				embed = discord.Embed(description = content, title = 'Зміст')
 
 			await info_msg.edit(embed = embed)
 			embed = None
