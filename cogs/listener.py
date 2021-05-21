@@ -119,7 +119,7 @@ class User(commands.Cog):
 				if color == '#43b581':
 					print('success bump')
 					await asyncio.sleep(4*60*60)
-					await ctx.message.channel.send(f'{message.author.mention} 4 години пройшло. Попроси інших, аби бампанули')
+					await message.channel.send(f'{message.author.mention} 4 години пройшло. Попроси інших, аби бампанули')
 
 	@commands.Cog.listener()
 
