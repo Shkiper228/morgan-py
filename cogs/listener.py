@@ -117,7 +117,7 @@ class User(commands.Cog):
 				print(message.embeds[0].colour)
 				color = str(message.embeds[0].colour)
 				if color == '#43b581':
-					author = message.embed[0].description[16:-1]
+					author = message.embeds[0].description[16:-1]
 					print('success bump')
 					await asyncio.sleep(4*60*60)
 					await message.channel.send(f'{author} 4 години пройшло. Попроси інших, аби бампанули')
