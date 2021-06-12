@@ -41,14 +41,14 @@ mafia = dict(
 
 
 reminders = [
-	dict(
-		date = None, #date
-		wday = '4', #weekday
-		time = '18:30', #time
-		alert = 'Івент розпочався', #alert
-		channel = 720915216174415963, #channel id
-		everyone = True
-	),
+	#dict(
+	#	date = None, #date
+	#	wday = '4', #weekday
+	#	time = '18:30', #time
+	#	alert = 'Івент розпочався', #alert
+	#	channel = 720915216174415963, #channel id
+	#	everyone = True
+	#),
 
 	dict(
 		date = None, #date
