@@ -41,23 +41,23 @@ mafia = dict(
 
 
 reminders = [
-	#dict(
-	#	date = None, #date
-	#	wday = '4', #weekday
-	#	time = '18:30', #time
-	#	alert = 'Івент розпочався', #alert
-	#	channel = 720915216174415963, #channel id
-	#	everyone = True
-	#),
-
 	dict(
 		date = None, #date
-		wday = '6', #weekday
-		time = '16:30', #time
+		wday = '4', #weekday
+		time = '18:30', #time
 		alert = 'Івент розпочався', #alert
 		channel = 720915216174415963, #channel id
 		everyone = True
-	)
+	),
+
+	#dict(
+	#	date = None, #date
+	#	wday = '6', #weekday
+	#	time = '16:30', #time
+	#	alert = 'Івент розпочався', #alert
+	#	channel = 720915216174415963, #channel id
+	#	everyone = True
+	#)
 ]
 
 info = '1 - обовязки адміністрації\n2 - правила діскорд сервера\n3 - правила майнкрафт сервера'
