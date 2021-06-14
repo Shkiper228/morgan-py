@@ -12,16 +12,28 @@ from discord.utils import get
 import asyncio
 
 
+#global
+mafia_game = dict(
+	isSet = False,
+	players = [],
 
+	)
+
+def mafia_unset():
+	mafia_game = dict(
+	isSet = False,
+	players = [],
+
+	)
 
 class User(commands.Cog):
 
 	def __init__(self, client):
 		self.client = client
 
-	@commands.command()
+	@commands.command(aliases = ['mafia'])
 	
-	async def mafia(self, ctx, action = None, count = None, guiding = None):
+	async def __mafia(self, ctx, action = None, count = None, guiding = None):
 
 		#import
 		from config import mafia

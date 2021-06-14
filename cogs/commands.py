@@ -19,17 +19,17 @@ class User(commands.Cog):
 		self.client = client
 
 
-	@commands.command(aliases=['час'])
+	@commands.command(aliases=['час', 'time'])
 	#команда для виводу часу по GMT+2
-	async def time (self, ctx):
+	async def __time(self, ctx):
 		tz = pytz.timezone('Europe/Kiev')
 		current_datetime = datetime.now(tz)
 		time = f'{current_datetime.hour} : {current_datetime.minute} : {current_datetime.second}'
 		await ctx.send(embed = discord.Embed(description = f'{ctx.message.author.mention} дійсний місцевий час --> {time}', color = 0x4D4D4D))
 
-	@commands.command()
+	@commands.command(aliases = ['info', 'infomation', 'інфо', 'інформація'])
 	#команда виводу загальної публічної інформації сервера
-	async def info(self, ctx):
+	async def __info(self, ctx):
 
 		guild = ctx.message.guild
 
