@@ -543,10 +543,7 @@ class User(commands.Cog):
 				await ctx.message.channel.send(embed = discord.Embed(description = f'{ctx.message.author.mention} зараз немає існуючої партії гри в мафію\nАби створити гру потрібно ввести команду:\n `$mafiatext create *id 1-o гравця* *id 2-o гравця* *id 3-o гравця* *id 4-o гравця* *id 5-o гравця* ... *id 9-o гравця*`'))
 				return
 			# Провірка доступу
-			perm = False
-			
 
-				i += 1
 
 			if ctx.message.author != mafia_game.author:
 				await ctx.message.channel.send(embed = discord.Embed(description = f'{ctx.message.author.mention} зараз включена партія гри, в якій ви не берете участі\nВи повинні бути учасником партії, аби мати право її видалити'))
