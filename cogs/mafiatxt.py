@@ -77,6 +77,10 @@ class User(commands.Cog):
 		mafia_game.count_living = mafia_game.count
 		channel = ctx.channel
 
+		if mafia_game.isSet == True and action != 'delete' and action != 'remove':
+			await channel.send(embed = discord.Embed(description = f'{ctx.message.author.mention} гра уже запущена. Спробуйте почати нову портію пізніше'))
+			return
+
 		if action == 'create':
 			"""
 	
@@ -224,14 +228,14 @@ class User(commands.Cog):
 
 			"""
 
-			await mafia_game.main_channel.send(embed = discord.Embed(description = f'Розпочато _`нульовий день`_. Можете просто поспілкуватись тут\nЧерез 5 секунд вам повідомиться _`роль`_ і почнеться _`перша ніч`_'))
+			await mafia_game.main_channel.send(embed = discord.Embed(description = f'Розпочато _`нульовий день`_. Можете просто поспілкуватись тут\nЧерез 2 хвилини вам повідомиться _`роль`_ і почнеться _`перша ніч`_'))
 			mafia_game.player_markup 
 			i = 0
 			while i < mafia_game.count:
 				mafia_game.player_markup += f'{number_emoji[i + 1]} ---> _`{mafia_game.players[i].member.name}`_\n'
 				i += 1
 			await mafia_game.main_channel.send(embed = discord.Embed(description = mafia_game.player_markup))
-			await asyncio.sleep(5)
+			await asyncio.sleep(120)
 			await mafia_game.main_channel.send(embed = discord.Embed(description = f'Початок _`першої ночі`_\nУдачі вам вижити!'))
 
 			#сповіщення ролі
@@ -265,7 +269,7 @@ class User(commands.Cog):
 				while i < mafia_game.count :
 
 					if mafia_game.players[i].role == mafia['sequence'][0] and mafia_game.players[i].isDead == False:
-						await mafia_game.players[i].personal_channel.send(mafia_game.players[i].member.mention)
+						await mafia_game.players[i].personal_channel.send(mafia_game.players[i].member.name)
 						mafia_game.players[i].last_message = await mafia_game.players[i].personal_channel.send(embed = discord.Embed(description = f'Розпочалась ніч _`№{mafia_game.nigth}`_\nВиберіть свою жертву за допомогою реакції на повідомленні'))
 						await mafia_game.players[i].personal_channel.send(embed = discord.Embed(description = mafia_game.player_markup))
 
@@ -276,7 +280,7 @@ class User(commands.Cog):
 							p += 1
 							
 					if mafia_game.players[i].role == mafia['sequence'][1] and mafia_game.players[i].isDead == False:
-						await mafia_game.players[i].personal_channel.send(mafia_game.players[i].member.mention)
+						await mafia_game.players[i].personal_channel.send(mafia_game.players[i].member.name)
 						mafia_game.players[i].last_message = await mafia_game.players[i].personal_channel.send(embed = discord.Embed(description = f'Розпочалась ніч _`№{mafia_game.nigth}`_\nВиберіть, кого ви хочете провірити, за допомогою реакції на повідомленні'))
 						await mafia_game.players[i].personal_channel.send(embed = discord.Embed(description = mafia_game.player_markup))
 
@@ -287,7 +291,7 @@ class User(commands.Cog):
 							p += 1
 					
 					if mafia_game.players[i].role == mafia['sequence'][2] and mafia_game.players[i].isDead == False:
-						await mafia_game.players[i].personal_channel.send(mafia_game.players[i].member.mention)
+						await mafia_game.players[i].personal_channel.send(mafia_game.players[i].member.name)
 						mafia_game.players[i].last_message = await mafia_game.players[i].personal_channel.send(embed = discord.Embed(description = f'Розпочалась ніч _`№{mafia_game.nigth}`_\nВиберіть, кого варто вилікувати, за допомогою реакції на повідомленні'))
 						await mafia_game.players[i].personal_channel.send(embed = discord.Embed(description = mafia_game.player_markup))
 
@@ -298,7 +302,7 @@ class User(commands.Cog):
 							p += 1
 
 					if mafia_game.players[i].role == mafia['sequence'][3] and mafia_game.players[i].isDead == False:
-						await mafia_game.players[i].personal_channel.send(mafia_game.players[i].member.mention)
+						await mafia_game.players[i].personal_channel.send(mafia_game.players[i].member.name)
 						mafia_game.players[i].last_message = await mafia_game.players[i].personal_channel.send(embed = discord.Embed(description = f'Розпочалась ніч №{mafia_game.nigth}\nВиберіть, кому ви хочете зробити алібі, за допомогою реакції на повідомленні'))
 						await mafia_game.players[i].personal_channel.send(embed = discord.Embed(description = mafia_game.player_markup))
 
@@ -511,6 +515,10 @@ class User(commands.Cog):
 					return
 
 
+				if mafia_game.isSet == False:
+					return
+
+
 
 
 
@@ -628,7 +636,7 @@ class User(commands.Cog):
 								mafia_game.last_votes_per_player[j] += 1
 								
 
-								print(f'гравeць {mafia_game.players[i]} проголосував за {mafia_game.players[j].moves[mafia_game.nigth - 1]}')
+								print(f'гравeць {mafia_game.players[i].member.name} проголосував за {mafia_game.players[j].moves[mafia_game.nigth - 1]}')
 
 								print(f'Голосування гравця {mafia_game.players[i].votes}')
 							print(f'Голосування за гравцями {mafia_game.last_votes_per_player}')
