@@ -90,7 +90,7 @@ class User(commands.Cog):
 
 			#провірка кількості
 			if mafia_game.count < 5:
-				await channel.send('Недостатня кількість гравців')
+				await channel.send(embed = discord.Embed(description = f'{ctx.message.author}  введена недостатня кількість гравців.\nМінімальна кількість гравців --> _`5`_'))
 				return
 
 			#провірка гравців
