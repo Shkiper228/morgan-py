@@ -45,6 +45,8 @@ class Mafia_game:
 	count_living = 0
 	win = None
 	
+	isVote = False
+
 	player_markup = ''
 	summary_message = []
 
@@ -393,9 +395,9 @@ class User(commands.Cog):
 					mafia_game.win = mafia['sequence'][4]
 
 				if mafia_game.win == None:
-					await mafia_game.main_channel.send(embed = discord.Embed(description = f'Через 1 хвилину розпочнеться наступна ніч'))
+					await mafia_game.main_channel.send(embed = discord.Embed(description = f'Через 15 секунд наступить день'))
 
-					await asyncio.sleep(60)
+					await asyncio.sleep(15)
 				else:
 					await mafia_game.main_channel.send(embed = discord.Embed(description = f'Виграли _`{mafia_game.win}`_'))
 
@@ -420,7 +422,9 @@ class User(commands.Cog):
 
 				"""
 
-				vote_message = await mafia_game.main_channel.send(embed = discord.Embed(description = f'Настав день №{mafia_game.nigth}\nВи можете проголосувати за вигнання одного з гравців.\nОбговоріть свій вибір з іншими впродовж паузи на день (30 секунд)'))
+				mafia_game.isVote = True
+
+				vote_message = await mafia_game.main_channel.send(embed = discord.Embed(description = f'Настав день №{mafia_game.nigth}\nВи можете проголосувати за вигнання одного з гравців.\nОбговоріть свій вибір з іншими впродовж паузи на день (3 хвилини)'))
 				await mafia_game.main_channel.send(embed = discord.Embed(description = mafia_game.player_markup))
 				i = 0
 				while i < mafia_game.count:
@@ -435,8 +439,9 @@ class User(commands.Cog):
 
 					i += 1
 
-				await asyncio.sleep(30)
+				await asyncio.sleep(180)
 
+				mafia_game.isVote = False
 
 				# Обробка результатів голосування
 
@@ -448,11 +453,19 @@ class User(commands.Cog):
 
 					i += 1
 
+				max_count_votes = 0
+				a = 0
+				while a < len(mafia_game.last_votes_per_player):
+					if max_count_votes < mafia_game.last_votes_per_player[a]:
+						max_count_votes = mafia_game.last_votes_per_player[a]
+
+					a += 1
+				print(f'Найбільше голосування на гравця {max_count_votes}')				
 				print(f'Утрималось {without_vote} гравців')
-				if without_vote > max(mafia_game.last_votes_per_player):
+				if without_vote > max_count_votes:
 					await mafia_game.main_channel.send(embed = discord.Embed(description = 'Цього дня більшість утрималась і ми не вигнали нікого'))
 				else:
-					kicked_player_index = mafia_game.last_votes_per_player.index(max(mafia_game.last_votes_per_player))
+					kicked_player_index = mafia_game.last_votes_per_player.index(max_count_votes)
 					await mafia_game.main_channel.send(embed = discord.Embed(description = f'Цього дня методом голосування було вигнано гравця {mafia_game.players[kicked_player_index].member.name}'))
 					mafia_game.players[kicked_player_index].isDead = True
 					mafia_game.count_living -= 1
@@ -480,9 +493,9 @@ class User(commands.Cog):
 
 
 				if mafia_game.win == None:
-					await mafia_game.main_channel.send(embed = discord.Embed(description = f'Через 1 хвилину розпочнеться наступна ніч'))
+					await mafia_game.main_channel.send(embed = discord.Embed(description = f'Через 15 секунд розпочнеться наступна ніч'))
 
-					await asyncio.sleep(60)
+					await asyncio.sleep(15)
 				else:
 					await mafia_game.main_channel.send(embed = discord.Embed(description = f'Виграли _`{mafia_game.win}`_'))
 
@@ -528,15 +541,22 @@ class User(commands.Cog):
 			mafia_game.category = None
 			mafia_game.main_channel = None
 			mafia_game.count = 0
+			mafia_game.count_living = 0
 			mafia_game.win = None
-		
-			mafia_game.player_markup = ''
-		
 
-		
+			mafia_game.isVote = False
+
+			mafia_game.player_markup = ''
+			mafia_game.summary_message = []
+
+			mafia_game.numbers_roles = []
+			mafia_game.last_moves = []
+			mafia_game.last_votes = []
+
 			mafia_game.nigth = 0
-		
+
 			mafia_game.count_per_role = []
+			mafia_game.last_votes_per_player = []
 			mafia_game.sequence_role = []
 			mafia_game.random_numbers = []
 
@@ -547,18 +567,24 @@ class User(commands.Cog):
 		guild = self.client.get_guild(reaction.guild_id)
 		channel = guild.get_channel(reaction.channel_id)
 
+
+		
+
 		if channel.category == mafia_game.category and reaction.member.bot == False:
 			i = 0
 			while i < mafia_game.count:
-				if mafia_game.players[i].member == reaction.member:
-					if mafia_game.players[i].isDead == True or len(mafia_game.players[i].moves) >= mafia_game.nigth :
-						return
+				if mafia_game.players[i].isDead == True:
+					return
+				if mafia_game.players[i].member == reaction.member: #гравець який поставив реакцію
+					print('знайдено гравця, який проголосував/походив')
 
-					if  channel == mafia_game.players[i].personal_channel:
+					if  channel == mafia_game.players[i].personal_channel and len(mafia_game.players[i].moves) < mafia_game.nigth:
 
 						j = 0
 						while j < mafia_game.count:
 							if str(reaction.emoji) == number_emoji[j + 1]:
+								print('знайдено гравця, до якого походили')
+
 								mafia_game.players[i].moves.append(j)
 								if mafia_game.players[i].role == mafia['sequence'][0]:
 									await mafia_game.players[i].personal_channel.send(embed = discord.Embed(description = f'Ви замахнулись на життя гравця _`{mafia_game.players[j].member.name}`_\nЯкщо його не вилікує _`doctor`_, то він помре'))
@@ -578,26 +604,34 @@ class User(commands.Cog):
 									await mafia_game.players[i].personal_channel.send(embed = discord.Embed(description = f'Ви провели ніч з гравцем _`{mafia_game.players[j].member.name}`_'))
 
 
-								print(f'Ходи гравця {mafia_game.players[i].moves}')
-								print(mafia_game.players[0].moves[mafia_game.nigth - 1])
+								print(f'Гравець {mafia_game.players[i].member.name} вибрав {mafia_game.players[i].moves[mafia_game.nigth - 1]}')
+
 							j += 1
 
 
 					elif channel == mafia_game.main_channel:
 						if mafia_game.last_votes[i] != None:
+							print(f'{mafia_game.players[i].member.name} намагався повторно проголосувати')
+							return
+
+						if mafia_game.isVote == False:
+							print(f'{mafia_game.players[i].member.name} намагався проголосувати, коли голосування було закрите')
 							return
 
 						j = 0
 						while j < mafia_game.count:
-							if str(reaction.emoji) == number_emoji[j + 1]:
+							print('Шукаємо гравця')
+							if str(reaction.emoji) == number_emoji[j + 1] :
+								print('знайдено гравця, за якого проголосували')
 								mafia_game.players[i].votes.append(j)
 								mafia_game.last_votes[i] = j
 								mafia_game.last_votes_per_player[j] += 1
+								
 
-								print(f'голосування за гравцями {mafia_game.last_votes_per_player}')
+								print(f'гравeць {mafia_game.players[i]} проголосував за {mafia_game.players[j].moves[mafia_game.nigth - 1]}')
 
 								print(f'Голосування гравця {mafia_game.players[i].votes}')
-
+							print(f'Голосування за гравцями {mafia_game.last_votes_per_player}')
 
 							j += 1
 				i += 1
