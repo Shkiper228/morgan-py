@@ -89,7 +89,7 @@ class User(commands.Cog):
 			"""
 
 			#провірка кількості
-			if mafia_game.count < 3:
+			if mafia_game.count < 5:
 				await channel.send('Недостатня кількість гравців')
 				return
 

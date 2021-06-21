@@ -24,9 +24,9 @@ helloWords = [
 
 mafia = dict(
 	minPlayers = [
-		3, 	#mafia
-		3, 	#sherif
-		3,	#doctor
+		5, 	#mafia
+		5, 	#sherif
+		5,	#doctor
 		7 	#putana
 		],
 	sequence = [
