@@ -74,7 +74,7 @@ class User(commands.Cog):
 	#сповіщення про вихід учасника сервера
 	async def on_member_remove(self,  member ):
 		channel = self.client.get_channel(channels['console'])
-		await channel.send(embed = discord.Embed(description = f'``{member.display_name}`` покинув нас!', color = 0x4D4D4D))	
+		await channel.send(embed = discord.Embed(description = f'`{member.display_name}` покинув нас!', color = 0x4D4D4D))	
 
 
 
@@ -125,7 +125,6 @@ class User(commands.Cog):
 	@commands.Cog.listener()
 
 	async def on_raw_reaction_add(self, reaction):
-		from config import info
 		if reaction.member.bot == False and reaction.message_id == 843190334263787570:
 			channel = self.client.get_channel(channels['info'])
 			info_msg = await channel.fetch_message(843190334263787570)

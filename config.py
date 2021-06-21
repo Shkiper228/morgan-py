@@ -24,9 +24,9 @@ helloWords = [
 
 mafia = dict(
 	minPlayers = [
-		5, 	#mafia
-		5, 	#sherif
-		5,	#doctor
+		3, 	#mafia
+		3, 	#sherif
+		3,	#doctor
 		7 	#putana
 		],
 	sequence = [
@@ -60,4 +60,4 @@ reminders = [
 	#)
 ]
 
-info = '1 - обовязки адміністрації\n2 - правила діскорд сервера\n3 - правила майнкрафт сервера'
+number_emoji = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
