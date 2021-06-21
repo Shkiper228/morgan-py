@@ -44,7 +44,7 @@ class Mafia_game:
 	count = 0
 	count_living = 0
 	win = None
-	author
+	author = None
 	
 	isVote = False
 
