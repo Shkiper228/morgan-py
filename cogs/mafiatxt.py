@@ -544,7 +544,7 @@ class User(commands.Cog):
 			perm = False
 			i = 0
 			while i < mafia_game.count:
-				if mafia_game.players[i].member.discriminator == ctx.message.author.discriminator:
+				if mafia_game.players[i].member.name == ctx.message.author.name:
 					perm = True
 
 				i += 1
