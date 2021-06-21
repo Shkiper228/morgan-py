@@ -546,7 +546,7 @@ class User(commands.Cog):
 
 
 			if ctx.message.author != mafia_game.author:
-				await ctx.message.channel.send(embed = discord.Embed(description = f'{ctx.message.author.mention} зараз включена партія гри, в якій ви не берете участі\nВи повинні бути учасником партії, аби мати право її видалити'))
+				await ctx.message.channel.send(embed = discord.Embed(description = f'{ctx.message.author.mention} зараз включена партія гри, в якій ви не берете участі\nВи повинні бути автором партії, аби мати право її видалити'))
 				return
 			print('Видаляю гру')
 			c = 0
