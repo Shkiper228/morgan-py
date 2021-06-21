@@ -44,6 +44,7 @@ class Mafia_game:
 	count = 0
 	count_living = 0
 	win = None
+	author
 	
 	isVote = False
 
@@ -88,6 +89,7 @@ class User(commands.Cog):
 
 			"""
 
+			mafia_game.author = ctx.message.author
 			#провірка кількості
 			if mafia_game.count < 5:
 				await channel.send(embed = discord.Embed(description = f'{ctx.message.author}  введена недостатня кількість гравців.\nМінімальна кількість гравців --> _`5`_'))
@@ -542,14 +544,11 @@ class User(commands.Cog):
 				return
 			# Провірка доступу
 			perm = False
-			i = 0
-			while i < mafia_game.count:
-				if mafia_game.players[i].member.mention == ctx.message.author.mention:
-					perm = True
+			
 
 				i += 1
 
-			if perm == False:
+			if ctx.message.author != mafia_game.author:
 				await ctx.message.channel.send(embed = discord.Embed(description = f'{ctx.message.author.mention} зараз включена партія гри, в якій ви не берете участі\nВи повинні бути учасником партії, аби мати право її видалити'))
 				return
 			print('Видаляю гру')
@@ -571,6 +570,7 @@ class User(commands.Cog):
 			mafia_game.count = 0
 			mafia_game.count_living = 0
 			mafia_game.win = None
+			mafia_game.author = None
 
 			mafia_game.isVote = False
 
