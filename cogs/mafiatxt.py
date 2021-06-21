@@ -286,11 +286,7 @@ class User(commands.Cog):
 
 						p = 0
 						while p < mafia_game.count:
-							if mafia_game.players[p].isDead == False and mafia_game.players[p] != mafia_game.players[i] and mafia_game.players[p].role != mafia_game.players[i].role and mafia_game.nigth < 2:
-								await mafia_game.players[i].last_message.add_reaction(number_emoji[p + 1])
-							elif mafia_game.players[p].isDead == False and mafia_game.players[p] != mafia_game.players[i] and mafia_game.players[p].role != mafia_game.players[i].role and mafia_game.players[i].moves[mafia_game.nigth - 2] != i:
-								await mafia_game.players[i].last_message.add_reaction(number_emoji[p + 1])
-							elif mafia_game.players[p] == mafia_game.players[i] and i not in mafia_game.players[i].moves:
+							if mafia_game.players[p].isDead == False and mafia_game.players[p] != mafia_game.players[i] and mafia_game.players[p].role != mafia_game.players[i].role:
 								await mafia_game.players[i].last_message.add_reaction(number_emoji[p + 1])
 							p += 1
 					
@@ -301,7 +297,11 @@ class User(commands.Cog):
 
 						p = 0
 						while p < mafia_game.count:
-							if mafia_game.players[p].isDead == False and mafia_game.players[p] != mafia_game.players[i] and mafia_game.players[p].role != mafia_game.players[i].role:
+							if mafia_game.players[p].isDead == False and mafia_game.players[p] != mafia_game.players[i] and mafia_game.players[p].role != mafia_game.players[i].role and mafia_game.nigth < 2:
+								await mafia_game.players[i].last_message.add_reaction(number_emoji[p + 1])
+							elif mafia_game.players[p].isDead == False and mafia_game.players[p] != mafia_game.players[i] and mafia_game.players[p].role != mafia_game.players[i].role and mafia_game.players[i].moves[mafia_game.nigth - 2] != i:
+								await mafia_game.players[i].last_message.add_reaction(number_emoji[p + 1])
+							elif mafia_game.players[p] == mafia_game.players[i] and i not in mafia_game.players[i].moves:
 								await mafia_game.players[i].last_message.add_reaction(number_emoji[p + 1])
 							p += 1
 
