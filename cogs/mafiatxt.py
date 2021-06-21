@@ -536,6 +536,22 @@ class User(commands.Cog):
 			"""		
 
 		elif action == 'delete' or action == 'remove':
+
+			if mafia_game.isSet == False:
+				await ctx.message.channel.send(embed = discord.Embed(description = f'{ctx.message.author.mention} зараз немає існуючої партії гри в мафію\nАби створити гру потрібно ввести команду:\n `$mafiatext create *id 1-o гравця* *id 2-o гравця* *id 3-o гравця* *id 4-o гравця* *id 5-o гравця* ... *id 9-o гравця*`'))
+				return
+			# Провірка доступу
+			perm = False
+			i = 0
+			while i < mafia_game.count:
+				if mafia_game.players[i].member == ctx.message.author:
+					perm = True
+
+				i += 1
+
+			if perm == False:
+				await ctx.message.channel.send(embed = discord.Embed(description = f'{ctx.message.author.mention} зараз включена партія гри, в якій ви не берете участі\nВи повинні бути учасником партії, аби мати право її видалити'))
+				return
 			print('Видаляю гру')
 			c = 0
 
