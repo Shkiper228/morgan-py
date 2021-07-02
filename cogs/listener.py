@@ -105,12 +105,29 @@ class User(commands.Cog):
 					emoji = emojis[randint(0, len(emojis) - 1)]
 					await message.add_reaction(emoji)
 				#add-ban ds servers for link
+				if msg.find('https://discord.gg/') != -1:
+					server_links_list = await message.guild.invites()
+
+					i = 0 
+					while i < len(server_links_list):
+						print(server_links_list[i].url.lower())
+						if msg.find(server_links_list[i].url.lower()) != -1:
+							return
+						i += 1
+
+					self.owner = message.guild.owner
+					await self.owner.send(f'{message.author} Рекламував посторонній сервер діскорд на твоєму сервері. Краще заблокуй його у себе')
+					await message.author.send(f'Тебе було автоматично забанено на ``{message.guild.name}`` за рекламу посторонніх діскорд серверів')
+					await message.author.ban(reason = 'Реклама дс серверів', delete_message_days = 0)
+					await message.channel.purge(limit = 1)
+				"""
 				if msg.find('https://discord.gg/') != -1 and msg.find('https://discord.gg/9caqe3aw8p') == -1:
 					self.owner = message.guild.owner
 					await self.owner.send(f'{message.author} Рекламував посторонній сервер діскорд на твоєму сервері. Краще заблокуй його у себе')
 					await message.author.send(f'Тебе було автоматично забанено на ``{message.guild.name}`` за рекламу посторонніх діскорд серверів')
 					await message.author.ban(reason = 'Реклама дс серверів', delete_message_days = 0)
 					await message.channel.purge(limit = 1)
+				"""
 		else:
 			if author.name + '#' + author.discriminator == 'Server Monitoring#8312':
 				print('bump!')
