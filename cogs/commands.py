@@ -103,6 +103,24 @@ class User(commands.Cog):
 			else:
 				await ctx.send(f'{user.mention} Сьогодні немає івенту!')
 
+	@commands.command(aliases=['random', 'randint'])
+	#команда для виводу часу по GMT+2
+	async def __randomint(self, ctx, minI, maxI):
+		try:
+			minI = int(minI)
+			maxI = int(maxI)
+		except:
+			await ctx.message.channel.send(embed = discord.Embed(description = f'{ctx.message.author.mention} Параметрами можуть бути лише цілі числа'))
+			return
+
+		if minI > maxI:
+			await ctx.message.channel.send(embed = discord.Embed(description = f'{ctx.message.author.mention} Перший параметр має бути меншим другого'))
+			return
+		await ctx.message.channel.send(embed = discord.Embed(description = f'{ctx.message.author.mention} Випадкове ціле число: {randint(minI, maxI)}'))
+		
+		
+
+
 
 	@commands.command()
 
