@@ -97,9 +97,9 @@ class User(commands.Cog):
 				await ctx.send(f'{user.mention} Сьогодні немає івенту!')
 		elif action == 'notif':
 			if current_datetime.weekday() == 4:
-				await channel.send(f'@everyone Сьогодні о 18:30  по Києву буде івент!')
+				await channel.send(embed = discord.Embed(description = f'@everyone Сьогодні о 18:30  по Києву буде івент!\nТрохи детальніше про івенти ти можеш довідатись тут `#📘info`'))
 			elif current_datetime.weekday() == 6:
-				await channel.send(f'@everyone Сьогодні о 16:30  по Києву буде івент!')
+				await channel.send(embed = discord.Embed(description = f'@everyone Сьогодні о 16:30  по Києву буде івент!\nТрохи детальніше про івенти ти можеш довідатись тут `#📘info`'))
 			else:
 				await ctx.send(f'{user.mention} Сьогодні немає івенту!')
 
